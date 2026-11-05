@@ -2904,17 +2904,17 @@ const SPRITES = [taoSprite(1.02, 140), taoSprite(.96, 136), taoSprite(1.08, 145)
             coHoa.classList.toggle('xong', coHoa.classList.contains('hien-thi'));
 
             const base = Hh + 4;
-            // vùng hai cô gái đứng: cỏ ở đó thấp hơn
+            // Vùng bánh sinh nhật: cỏ thấp hơn để lộ đĩa bánh và hộp quà.
             const imgH = anhHaiNguoi.getBoundingClientRect().height;
             const vungX = W - imgH * 0.634 - W * 0.02 - 20;
 
             // Tăng mật độ nhưng gom theo màu vào 5 SVG path thay vì hàng trăm nhóm chuyển động.
             const ph = rnd(0, 6);
             const nhomCo = new Map(MAU_XANH.map(m => [m, []]));
-            for (let x = -10; x < W + 10; x += rnd(3.1, 6.2)) {
-                let h = Hh * (0.22 + 0.42 * rnd(0.35, 1) * (0.65 + 0.35 * Math.sin(x / 85 + ph)));
-                // Vùng hai cô gái vẫn có cỏ cao thay vì bị hạ xuống một nửa.
-                if (x > vungX) h *= 0.98;
+            // Đồng hoa: cỏ thấp làm nền cho nhiều hoa hơn.
+            for (let x = -10; x < W + 10; x += rnd(3.6, 7)) {
+                let h = Hh * (0.14 + 0.28 * rnd(0.35, 1) * (0.65 + 0.35 * Math.sin(x / 85 + ph)));
+                if (x > vungX) h *= 0.55;
                 const lean = rnd(-0.3, 0.08) * h;
                 const w = rnd(2.5, 6);
                 const d = `M ${x - w} ${base} Q ${x - w + lean * .35} ${base - h * .55} ${x + lean} ${base - h} Q ${x + w + lean * .35} ${base - h * .5} ${x + w} ${base}`;
@@ -2929,18 +2929,29 @@ const SPRITES = [taoSprite(1.02, 140), taoSprite(.96, 136), taoSprite(1.08, 145)
             if (!mobile) canhLa(coHoa, W * 0.32, base, W * 0.1, Hh * 0.8, 6, 1.0, W);
 
             // Tăng hoa nhưng không tăng quá nhiều đường SVG động.
-            const soHoa = mobile ? 5 : 9;
+            const soHoa = mobile ? 9 : (LYN_PERF.lite ? 13 : 18);
             const dau = W * 0.06, cuoi = Math.max(dau + 50, vungX - 30);
             for (let i = 0; i < soHoa; i++) {
                 const x = dau + (cuoi - dau) * (i + rnd(0.2, 0.8)) / soHoa;
-                cayHoa(coHoa, x, base, Hh * rnd(0.7, 1.0), i % 3, 0.8 + (x / W) * 1.5, W);
+                cayHoa(coHoa, x, base, Hh * rnd(0.5, 1.0), i % 3, 0.8 + (x / W) * 1.5, W);
             }
-            // Một dải hoa, lá và cành ở trước chân 2 cô gái.
+            // Thảm hoa nhỏ sát mặt đất, trải khắp chiều ngang.
+            const soHoaNho = mobile ? 10 : (LYN_PERF.lite ? 16 : 24);
+            for (let i = 0; i < soHoaNho; i++) {
+                const x = W * (i + rnd(0.15, 0.85)) / soHoaNho;
+                const thap = x > vungX ? rnd(0.06, 0.16) : rnd(0.1, 0.34);
+                const y = base - Hh * thap;
+                const g = nhomLac(coHoa, x, base, rnd(1, 2.2), 3.6, -(x / W) * 3);
+                const R = rnd(6, 10.5), dl = 1.1 + (x / W) * 1.4;
+                if (i % 2) hoaNam(g, x, y, R, dl, chon(MAU_HOA), chon(MAU_TAM));
+                else hoaCuc(g, x, y, R, dl, chon(MAU_HOA), chon(MAU_TAM));
+            }
+            // Một dải hoa thấp trước bánh sinh nhật, không che đĩa bánh và hộp quà.
             if (vungX < W - 40) {
-                const soHoaChan = mobile ? 4 : 6;
+                const soHoaChan = mobile ? 4 : 7;
                 for (let i = 0; i < soHoaChan; i++) {
                     const x = Math.max(0, vungX) + (W - Math.max(0, vungX)) * (i + .5) / soHoaChan;
-                    cayHoa(coHoa, x, base, Hh * rnd(.38, .66), i % 3, 1.4 + i * .14, W);
+                    cayHoa(coHoa, x, base, Hh * rnd(.22, .4), i % 3, 1.4 + i * .14, W);
                 }
             }
         }

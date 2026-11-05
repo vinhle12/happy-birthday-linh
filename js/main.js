@@ -76,89 +76,82 @@
         
         // === MP3 + lyric: đồng hồ nhạc là nguồn thời gian duy nhất, không lệ thuộc số lượt click. ===
         const lynSoundtrack = document.getElementById('lyn-soundtrack');
-        const musicWaitHint = document.getElementById('music-wait-hint');
         const lyricZone = document.getElementById('lyn-lyric-zone');
         const lyricSlots = [document.getElementById('lyn-lyric-top'), document.getElementById('lyn-lyric-bottom')];
 
-        const lyricCues = [{"time":0.0,"text":"chỉ biết nói cho em"},{"time":1.7,"text":"nghe vậy thôi"},{"time":3.4,"text":"vì đã lỡ yêu em rồi"},{"time":6.3,"text":"chẳng giám hứa xa sôi"},{"time":9.7,"text":"người ta nói chẳng ai hiểu"},{"time":13.1,"text":"về hai tiếng thương yêu"},{"time":16.0,"text":"chẳng phải cứ bên nhau"},{"time":18.1,"text":"làm nhau khổ đau là tình yêu?"},{"time":22.8,"text":"nhiều khi rất yêu nhau mà"},{"time":26.0,"text":"phải đứng ở rất xa"},{"time":29.4,"text":"nhìn em hạnh phúc bên ai chẳng phải mình"},{"time":33.4,"text":"vì mình có làm được đâu"},{"time":35.7,"text":"nhường ai khác bên em là"},{"time":38.5,"text":"nhường đi hết tất cả"},{"time":42.0,"text":"yêu em chẳng khiến em được vui"},{"time":44.9,"text":"thế nên anh phải xa"},{"time":48.7,"text":"càng yêu chỉ thêm thất vọng"},{"time":51.8,"text":"càng tan nát cõi lòng"},{"time":55.0,"text":"không được như mong"}];
-        const MUSIC_HOLD_TIME = 9.7;
-        const MUSIC_FADE_START = 8.35;
+        // Bài mới chưa có lời được canh giờ nên tạm không hiện lyric.
+        const lyricCues = [];
+        // Mốc nhạc của bài "SINH NHAT" (đo bằng Web Audio): 180 BPM, mỗi phách 0,3333 s.
+        const MUSIC_DROP = 10.385;          // nhạc bùng lên lần đầu
+        const INTRO_LOOP = 5.327;           // intro lặp lại đúng 16 phách khi người xem chưa bấm
+        const MAIN_LOOP_AT = 159.9;         // gần cuối điệp khúc 3, trước đoạn chuyển
+        const MAIN_LOOP = 63.995;           // điệp khúc 3 trùng điệp khúc 2 sau đúng 192 phách
+        const OUTRO_START = MUSIC_DROP + 127.996; // đầu điệp khúc 3: outro chạy tới hết bài
+        const BEAT = 0.333323;
+        const BEAT_ZERO = MUSIC_DROP - .005;
         const MUSIC_VOLUME = 0.84;
         let musicGateClosed = false;
         let musicAllowedPastGate = false;
         let musicFadeTimer = null;
-        let musicResumeFadeStart = 0;
-        let musicSeekingResume = false;
         let lyricActiveIndex = -1;
         let lyricSlotIndex = -1;
         let lyricInterval = null;
         lynSoundtrack.volume = MUSIC_VOLUME;
         lynSoundtrack.muted = false;
-        let musicHintTimer = null;
-        const musicWaitMessages = ['đợi chút xíu đii', 'đợi chút nữa thui', 'xíu nữa', 'sắp được rùi', '1 chút thuii'];
-        function showMusicWaitHint() {
-            const msg = musicWaitMessages[Math.floor(Math.random() * musicWaitMessages.length)];
-            musicWaitHint.textContent = msg;
-            musicWaitHint.classList.add('show');
-            clearTimeout(musicHintTimer);
-            musicHintTimer = setTimeout(() => musicWaitHint.classList.remove('show'), 1700);
-        }
 
         function startMusicIfAllowed() {
             // Trình duyệt có thể chặn autoplay có tiếng khi chưa có thao tác người dùng.
             // Không hiện nút: thử phát khi mở, và thử lại trong lần click/chạm đầu tiên.
-            if (musicGateClosed && !musicAllowedPastGate) return;
             if (!lynSoundtrack.paused) return;
             const p = lynSoundtrack.play();
             if (p && typeof p.catch === 'function') p.catch(() => {});
         }
 
-        function musicFadeAndHold() {
-            if (musicAllowedPastGate || musicGateClosed) return;
-            const t = lynSoundtrack.currentTime || 0;
-            if (t >= MUSIC_HOLD_TIME - .02) {
-                musicGateClosed = true;
-                scheduleIntroNudge(2000);
-                lynSoundtrack.pause();
-                try { lynSoundtrack.currentTime = MUSIC_HOLD_TIME; } catch (_) {}
-                lynSoundtrack.volume = 0;
-                if (musicFadeTimer !== null) { clearInterval(musicFadeTimer); musicFadeTimer = null; }
-                return;
-            }
-            if (t >= MUSIC_FADE_START) {
-                lynSoundtrack.volume = MUSIC_VOLUME * Math.max(0, (MUSIC_HOLD_TIME - t) / (MUSIC_HOLD_TIME - MUSIC_FADE_START));
+        function tuaNhac(t) {
+            if (lynSoundtrack.readyState >= 1) {
+                try { lynSoundtrack.currentTime = t; } catch (_) {}
+            } else {
+                lynSoundtrack.addEventListener('loadedmetadata', () => { lynSoundtrack.currentTime = t; }, {once:true});
             }
         }
 
-        // Chỉ phát tiếp sau khi nghe đủ 9,7 giây VÀ click vào "ui cậu đẹp quá".
+        // Intro lặp từng 16 phách cho tới khi người xem bấm sang "Ui cậu đẹp quá".
+        function musicFadeAndHold() {
+            if (musicAllowedPastGate) return;
+            const t = lynSoundtrack.currentTime || 0;
+            if (t < MUSIC_DROP - .03) return;
+            tuaNhac(t - INTRO_LOOP);
+            if (!musicGateClosed) {
+                musicGateClosed = true;
+                scheduleIntroNudge(2000);
+            }
+        }
+
+        // Bấm sang "Ui cậu đẹp quá": nhạc vào thẳng đoạn drop ngay lúc bấm.
         function resumeMusicAtBeauty() {
             if (musicAllowedPastGate) return;
-            if (!musicGateClosed || lynSoundtrack.currentTime < MUSIC_HOLD_TIME - .045) return;
             musicAllowedPastGate = true;
             musicGateClosed = false;
             if (musicFadeTimer !== null) { clearInterval(musicFadeTimer); musicFadeTimer = null; }
-            musicSeekingResume = true;
-            if (lynSoundtrack.readyState >= 1) {
-                try { lynSoundtrack.currentTime = Math.max(MUSIC_HOLD_TIME, lynSoundtrack.currentTime); } catch (_) {}
-            } else {
-                lynSoundtrack.addEventListener('loadedmetadata', () => {
-                    if (musicSeekingResume) lynSoundtrack.currentTime = MUSIC_HOLD_TIME;
-                }, {once:true});
-            }
-            lynSoundtrack.volume = 0;
-            const fadeIn = (now) => {
-                if (lynSoundtrack.paused || !musicAllowedPastGate) return;
-                const v = Math.max(0, Math.min(1, (now - musicResumeFadeStart) / 850));
-                lynSoundtrack.volume = MUSIC_VOLUME * v;
-                if (v < 1) requestAnimationFrame(fadeIn);
-            };
-            // Đợi âm thanh PHÁT THỰC SỰ rồi mới đếm 850ms tăng âm lượng.
-            // Nếu bắt đầu rAF trước play() xong thì có thể bị kẹt tại volume=0.
-            lynSoundtrack.addEventListener('playing', () => {
-                musicResumeFadeStart = performance.now();
-                requestAnimationFrame(fadeIn);
-            }, {once:true});
+            tuaNhac(MUSIC_DROP - .02);
+            lynSoundtrack.volume = MUSIC_VOLUME;
             startMusicIfAllowed();
+        }
+
+        // Thời gian (ms) tới phách kế tiếp, để lời thoại đổi đúng nhịp nhạc.
+        function choPhachKeTiep() {
+            if (!musicAllowedPastGate || lynSoundtrack.paused || outroStep) return 0;
+            const pha = (((lynSoundtrack.currentTime - BEAT_ZERO) % BEAT) + BEAT) % BEAT;
+            const con = BEAT - pha;
+            return con > BEAT - .06 ? 0 : con * 1000;
+        }
+        let dangChoPhach = false;
+        function theoNhip(fn) {
+            if (dangChoPhach) return;
+            const ms = choPhachKeTiep();
+            if (!ms) { fn(); return; }
+            dangChoPhach = true;
+            setTimeout(() => { dangChoPhach = false; fn(); }, ms);
         }
 
         function cueIndexAt(t) {
@@ -210,11 +203,14 @@
 
         lynSoundtrack.addEventListener('timeupdate', () => {
             musicFadeAndHold();
+            // Xem lâu quá hết điệp khúc 3 thì vòng lại 192 phách, nghe liền mạch.
+            if (musicAllowedPastGate && !outroStep && lynSoundtrack.currentTime >= MAIN_LOOP_AT)
+                tuaNhac(lynSoundtrack.currentTime - MAIN_LOOP);
             if (activeWish === 'smile') syncLyricWithMusic();
         });
         lynSoundtrack.addEventListener('play', () => {
-            if (!musicAllowedPastGate && !musicGateClosed && musicFadeTimer === null)
-                musicFadeTimer = setInterval(musicFadeAndHold, 35);
+            if (!musicAllowedPastGate && musicFadeTimer === null)
+                musicFadeTimer = setInterval(musicFadeAndHold, 20);
         });
         // Thử phát NGAY khi mở trang (và khi media sẵn sàng), không cần nút riêng.
         // Chrome/Safari có thể chặn tiếng khi chưa có tương tác: trường hợp đó click đầu tiên
@@ -298,11 +294,6 @@
                 // Gọi play() ngay trong tương tác để Chrome cho phép âm thanh.
                 startMusicIfAllowed();
                 if (sangDongTiepTheo()) return;
-                // Không được bỏ qua 9,7 giây đầu dù click nhiều lần.
-                if (clickCount === 2 && (!musicGateClosed || lynSoundtrack.currentTime < MUSIC_HOLD_TIME - .045)) {
-                    showMusicWaitHint();
-                    return;
-                }
                 if (clickCount === 2) resumeMusicAtBeauty();
                 hideIntroNudge();
 
@@ -2355,7 +2346,7 @@ const SPRITES = [taoSprite(1.02, 140), taoSprite(.96, 136), taoSprite(1.08, 145)
                 canClick = true;
             }, 750);
         }
-        agreeButton?.addEventListener('click', batDauLoiHua);
+        agreeButton?.addEventListener('click', () => theoNhip(batDauLoiHua));
 
         // Outro: ảnh hồi tưởng bên trái hiện rồi mờ dần, credit bên phải cuộn dọc từ dưới lên.
         const outroScene = document.getElementById('lyn-outro');
@@ -2363,7 +2354,7 @@ const SPRITES = [taoSprite(1.02, 140), taoSprite(.96, 136), taoSprite(1.08, 145)
         const outroCount = document.getElementById('outro-count');
         const creditBox = document.getElementById('outro-credits');
         const creditRoll = document.getElementById('credit-roll');
-        const PHOTO_MS = 3600;
+        const PHOTO_MS = BEAT * 12 * 1000;
 
         // Cuộn credit suốt thời gian chạy ảnh, dừng khi lời chúc cuối nằm giữa khung.
         function chayCredit(thoiGian) {
@@ -2395,20 +2386,41 @@ const SPRITES = [taoSprite(1.02, 140), taoSprite(.96, 136), taoSprite(1.08, 145)
             });
             outroScene.setAttribute('aria-hidden', 'false');
             requestAnimationFrame(() => outroScene.classList.add('hien-thi'));
-            let i = -1;
-            const tiep = () => {
-                // Ảnh cuối giữ lại cùng lời chúc kết.
-                if (i >= 0 && i < anh.length - 1) anh[i].classList.remove('hien-thi');
-                i++;
-                if (i >= anh.length) return;
-                anh[i].classList.add('hien-thi');
-                outroCount.textContent = String(i + 1).padStart(2, '0') + ' / ' + anh.length;
-                setTimeout(tiep, PHOTO_MS);
+
+            // Nhạc nhỏ dần rồi vào thẳng điệp khúc 3 cùng lúc ảnh đầu tiên hiện.
+            const coNhac = !lynSoundtrack.paused;
+            const v0 = lynSoundtrack.volume, tGiam = performance.now();
+            const giam = now => {
+                const k = Math.min(1, (now - tGiam) / 600);
+                lynSoundtrack.volume = Math.max(0, v0 * (1 - k));
+                if (k < 1) { requestAnimationFrame(giam); return; }
+                tuaNhac(OUTRO_START);
+                lynSoundtrack.volume = MUSIC_VOLUME;
+                startMusicIfAllowed();
+                batDauAnhVaCredit(coNhac);
             };
-            setTimeout(() => {
-                tiep();
+            requestAnimationFrame(giam);
+
+            function batDauAnhVaCredit(theoNhac) {
+                // Đồng hồ: theo thời gian bài hát nếu nhạc đang phát, không thì theo đồng hồ máy.
+                const t0 = performance.now();
+                const daQua = () => theoNhac && !lynSoundtrack.paused
+                    ? (lynSoundtrack.currentTime - OUTRO_START) * 1000
+                    : performance.now() - t0;
+                let dangHien = -1;
                 chayCredit(anh.length * PHOTO_MS);
-            }, 1400);
+                const buoc = () => {
+                    const i = Math.min(anh.length - 1, Math.floor(Math.max(0, daQua()) / PHOTO_MS));
+                    if (i !== dangHien) {
+                        if (dangHien >= 0) anh[dangHien].classList.remove('hien-thi');
+                        anh[i].classList.add('hien-thi');
+                        outroCount.textContent = String(i + 1).padStart(2, '0') + ' / ' + anh.length;
+                        dangHien = i;
+                    }
+                    if (daQua() < anh.length * PHOTO_MS) requestAnimationFrame(buoc);
+                };
+                requestAnimationFrame(buoc);
+            }
         }
 
         // Cả PC và điện thoại: click/chạm vào nền để chuyển cảnh.
@@ -2417,7 +2429,9 @@ const SPRITES = [taoSprite(1.02, 140), taoSprite(.96, 136), taoSprite(1.08, 145)
             !!target.closest('a, button, input, textarea, select, summary, [role="button"], [contenteditable="true"]');
         document.addEventListener('click', function(event) {
             if (lynIsControl(event.target)) return;
-            chuyenCanh();
+            // Gọi play() ngay trong thao tác bấm, rồi đổi cảnh đúng phách kế tiếp.
+            startMusicIfAllowed();
+            theoNhip(chuyenCanh);
         });
 
         function khoiDongLaVang() {

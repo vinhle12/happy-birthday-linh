@@ -1,0 +1,269 @@
+/* ===== Dòng thoại: mỗi .text-line là một lần bấm ===== */
+.text-layer > .text-line { display: none; }
+.text-layer > .text-line.is-current { display: block; animation: lynLineIn .55s ease both; }
+.text-layer > .text-line.is-leaving { animation: lynLineOut .3s ease both; }
+@keyframes lynLineIn {
+    from { opacity: 0; transform: translateY(8px); filter: blur(4px); }
+    to   { opacity: 1; transform: none; filter: none; }
+}
+@keyframes lynLineOut {
+    to { opacity: 0; transform: translateY(-6px); filter: blur(3px); }
+}
+
+/* Câu dài hơn bản cũ: giữ trong khung đọc dễ, ngắt dòng cân đối. */
+.text-layer { text-wrap: balance; }
+#text-2, #text-3, #text-4 { padding-inline: 6vw; box-sizing: border-box; line-height: 1.35; }
+#text-3 { font-size: clamp(20px, 2.6vw, 2.5rem); }
+#text-4 .text-line + .text-line { font-size: .82em; }
+#text-5 .chu-ngay-sinh {
+    margin-top: .3em;
+    font-size: 1.12em;
+    letter-spacing: .08em;
+    color: #ffe3a3;
+    text-shadow: 0 0 14px rgba(255,214,120,.9), 0 0 32px rgba(255,150,190,.55);
+}
+#text-5 .chu-tuoi {
+    color: #fff1b8;
+    text-shadow: 0 0 14px rgba(255,220,130,.95), 0 0 30px rgba(255,140,190,.6);
+}
+
+/* ===== Nút Đồng ý ở câu hỏi cuối: nằm dưới đôi mắt ===== */
+.lyn-agree-button {
+    position: fixed;
+    left: 50%;
+    top: 74%;
+    translate: -50% 0;
+    z-index: 30;
+    padding: .5em 1.8em;
+    font-family: inherit;
+    font-size: clamp(18px, 2.2vw, 28px);
+    font-weight: 700;
+    letter-spacing: .12em;
+    color: #eaf9ff;
+    background: linear-gradient(180deg, rgba(120,205,255,.32), rgba(60,130,255,.18));
+    border: 1.5px solid rgba(160,225,255,.85);
+    border-radius: 999px;
+    box-shadow: 0 0 18px rgba(110,200,255,.55), inset 0 0 14px rgba(190,240,255,.25);
+    text-shadow: 0 0 10px rgba(180,235,255,.9);
+    cursor: pointer;
+    pointer-events: auto;
+    animation: lynAgreeBreath 2.4s ease-in-out infinite;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .6s ease, visibility .6s, transform .2s ease, box-shadow .2s ease;
+}
+.lyn-agree-button.hien-thi { opacity: 1; visibility: visible; }
+.lyn-agree-button:hover { transform: scale(1.06); box-shadow: 0 0 28px rgba(130,215,255,.85), inset 0 0 16px rgba(200,245,255,.35); }
+.lyn-agree-button:focus-visible { outline: 2px solid #fff; outline-offset: 4px; }
+.lyn-agree-button.nudge { animation: lynAgreeNudge .5s ease, lynAgreeBreath 2.4s ease-in-out .5s infinite; }
+@keyframes lynAgreeBreath {
+    0%, 100% { box-shadow: 0 0 16px rgba(110,200,255,.45), inset 0 0 12px rgba(190,240,255,.2); }
+    50%      { box-shadow: 0 0 30px rgba(130,215,255,.85), inset 0 0 18px rgba(200,245,255,.35); }
+}
+@keyframes lynAgreeNudge {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-6px); }
+    75% { transform: translateX(6px); }
+}
+
+/* ===== Lời hứa sau khi đồng ý ===== */
+#text-14 {
+    top: 11%;
+    padding-inline: 6vw;
+    box-sizing: border-box;
+    font-size: clamp(22px, 3.1vw, 48px);
+    font-weight: 700;
+    line-height: 1.4;
+    letter-spacing: 1.6px;
+    color: #fff4fb;
+    text-shadow: 0 0 14px rgba(255,200,235,.9), 0 0 34px rgba(150,200,255,.45);
+    z-index: 12;
+}
+
+/* ===== Outro: các lớp cũ mờ đi, chỉ giữ trời sao ===== */
+body.lyn-outro-active > :not(.lyn-outro):not(#lyn-sky):not(script) {
+    opacity: 0 !important;
+    pointer-events: none !important;
+    transition: opacity 1.1s ease !important;
+}
+.lyn-outro {
+    position: fixed;
+    inset: 0;
+    z-index: 9000;
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 1.2s ease, visibility 1.2s;
+}
+.lyn-outro.hien-thi { opacity: 1; visibility: visible; }
+
+/* ----- Outro 1: con đường giấc mơ ----- */
+#lyn-dream-reel {
+    background:
+        radial-gradient(ellipse 70% 45% at 50% 50%, rgba(255,170,220,.16), transparent 70%),
+        radial-gradient(ellipse 90% 60% at 50% 110%, rgba(110,170,255,.22), transparent 65%),
+        rgba(4,3,14,.72);
+}
+#lyn-dream-reel .dream-glow {
+    position: absolute;
+    inset: -10%;
+    background:
+        radial-gradient(circle at 20% 30%, rgba(255,210,240,.10), transparent 30%),
+        radial-gradient(circle at 80% 70%, rgba(170,220,255,.10), transparent 32%);
+    animation: lynDreamDrift 14s ease-in-out infinite alternate;
+}
+@keyframes lynDreamDrift { to { transform: translate3d(3%, -2%, 0) scale(1.05); } }
+.dream-road { position: absolute; inset: 0; }
+.dream-path { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.dream-path path { fill: none; stroke-linecap: round; }
+.dream-path-glow { stroke: rgba(255,190,230,.22); stroke-width: 26; filter: blur(10px); }
+.dream-path-line {
+    stroke: rgba(255,240,250,.55);
+    stroke-width: 2;
+    stroke-dasharray: 2 14;
+    animation: lynDreamDash 1.6s linear infinite;
+}
+@keyframes lynDreamDash { to { stroke-dashoffset: 16; } }
+.dream-frame {
+    position: absolute;
+    left: 0;
+    top: 0;
+    margin: 0;
+    height: var(--frame-h, 40vh);
+    aspect-ratio: 3 / 4;
+    padding: 8px 8px 26px;
+    box-sizing: border-box;
+    background: #fdf7fb;
+    border-radius: 10px;
+    box-shadow: 0 0 34px rgba(255,190,230,.38), 0 18px 40px rgba(0,0,0,.45);
+    transform-origin: 50% 50%;
+    will-change: transform, opacity;
+}
+.dream-frame img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 30%;
+    border-radius: 5px;
+    background: #e9dbe6;
+}
+.dream-caption {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 7%;
+    margin: 0;
+    text-align: center;
+    font-size: clamp(16px, 2vw, 24px);
+    letter-spacing: .14em;
+    color: #ffe9f6;
+    text-shadow: 0 0 14px rgba(255,190,230,.85);
+    opacity: 0;
+    animation: lynCaptionIn 2s ease 1.6s forwards;
+}
+.dream-caption span { color: #c9ecff; }
+@keyframes lynCaptionIn { to { opacity: .92; } }
+
+/* ----- Outro 2: credit ----- */
+#lyn-credits {
+    background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(30,18,45,.55), rgba(0,0,0,.92));
+    -webkit-mask-image: linear-gradient(transparent 0, #000 14%, #000 86%, transparent 100%);
+            mask-image: linear-gradient(transparent 0, #000 14%, #000 86%, transparent 100%);
+}
+.credits-roll {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    width: min(88vw, 640px);
+    margin-left: calc(min(88vw, 640px) / -2);
+    text-align: center;
+    color: #f4eef8;
+    transform: translate3d(0, 100vh, 0);
+    will-change: transform;
+}
+.credits-presents {
+    margin: 0 0 1.4em;
+    font-size: clamp(13px, 1.5vw, 17px);
+    letter-spacing: .32em;
+    text-transform: uppercase;
+    color: #c9b8d8;
+}
+.credits-title {
+    margin: 0;
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(40px, 6.4vw, 78px);
+    font-weight: 700;
+    line-height: 1.1;
+    color: #ffe6f4;
+    text-shadow: 0 0 22px rgba(255,170,220,.7), 0 0 50px rgba(160,200,255,.35);
+}
+.credits-date {
+    margin: .9em 0 0;
+    font-size: clamp(13px, 1.6vw, 18px);
+    letter-spacing: .2em;
+    color: #ffe0a8;
+}
+.credits-block {
+    margin: 4.2em 0 0;
+    display: grid;
+    gap: 2.1em;
+}
+.credits-block div { display: grid; gap: .35em; }
+.credits-block dt {
+    font-size: clamp(12px, 1.3vw, 15px);
+    letter-spacing: .3em;
+    text-transform: uppercase;
+    color: #b9a7cb;
+}
+.credits-block dd {
+    margin: 0;
+    font-size: clamp(26px, 3.4vw, 40px);
+    font-weight: 700;
+    letter-spacing: .06em;
+    color: #ffffff;
+    text-shadow: 0 0 16px rgba(255,200,240,.45);
+}
+.credits-block-small { margin-top: 3.6em; gap: 1.5em; }
+.credits-block-small dd { font-size: clamp(19px, 2.3vw, 27px); }
+.credits-story {
+    margin: 3.4em auto 0;
+    max-width: 34em;
+    font-size: clamp(15px, 1.7vw, 19px);
+    line-height: 1.75;
+    color: #ded3e8;
+}
+.credits-story + .credits-story { margin-top: 1.2em; }
+.credits-story strong { color: #ffd7ee; }
+.credits-end {
+    margin: 55vh 0 0;
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(36px, 5.4vw, 64px);
+    font-weight: 700;
+    color: #ffe6f4;
+    text-shadow: 0 0 22px rgba(255,170,220,.75);
+    transition: text-shadow 1.6s ease, transform 1.6s ease;
+}
+.credits-end span { color: #ff9fcf; }
+.credits-end.hien-thi {
+    transform: scale(1.06);
+    text-shadow: 0 0 26px rgba(255,180,225,.95), 0 0 70px rgba(255,140,200,.55);
+}
+.credits-fin {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 14%;
+    margin: 0;
+    text-align: center;
+    font-size: clamp(14px, 1.6vw, 18px);
+    letter-spacing: .4em;
+    color: #c9b8d8;
+    opacity: 0;
+    transition: opacity 2s ease;
+}
+.credits-fin.hien-thi { opacity: .9; }
+
+@media (prefers-reduced-motion: reduce) {
+    .dream-path-line, #lyn-dream-reel .dream-glow, .lyn-agree-button { animation: none; }
+}

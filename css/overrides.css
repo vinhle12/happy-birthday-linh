@@ -1,0 +1,2215 @@
+/* Các bản vá/nâng cấp CSS, giữ nguyên thứ tự gốc để không đổi cascade. */
+
+/* ===== lyn-mobile-branch ===== */
+
+/* ============================================================
+   NHÁNH HIỂN THỊ RIÊNG CHO ĐIỆN THOẠI
+   Chỉ chạy khi vùng hiển thị nhỏ. Laptop/desktop giữ nguyên 100%
+   HTML, JS, nhạc, video, đồng bộ lyric và mọi phân cảnh gốc.
+   ============================================================ */
+@media screen and (max-width: 700px) and (orientation: portrait) {
+    :root { --anh-cao: 51dvh; }
+    html, body { width: 100%; height: 100%; }
+    body { height: 100dvh; }
+
+    /* Mỗi câu chúc nằm trong phần đầu, không chèn vào mắt/video. */
+    .text-layer {
+        box-sizing: border-box;
+        padding-inline: 16px;
+        letter-spacing: clamp(.6px, .35vw, 1.5px);
+        line-height: 1.4;
+        overflow-wrap: break-word;
+    }
+    #text-1 { font-size: clamp(26px, 7.6vw, 38px); }
+    #text-2 { font-size: clamp(24px, 7vw, 33px); bottom: 13%; }
+    #text-3 { font-size: clamp(20px, 5.6vw, 27px); top: 9%; }
+    #text-4 { font-size: clamp(24px, 7.2vw, 34px); bottom: 11%; }
+    #text-5 { top: 6.5%; left: 0; width: 100%; font-size: clamp(19px, 5.6vw, 27px); }
+    #text-6 { top: 9%; font-size: clamp(23px, 6.2vw, 32px); }
+    #text-7 { top: 7.5%; font-size: clamp(20px, 5.5vw, 27px); }
+    #text-8, #text-9 {
+        top: 6%; left: 0; width: 100%;
+        font-size: clamp(21px, 5.65vw, 28px);
+        line-height: 1.38; letter-spacing: 1px;
+        padding-inline: clamp(14px, 4vw, 22px);
+    }
+
+    /* LYN ở phần trên giữa; mắt và má hồng vẫn cùng hệ tọa độ. */
+    #khung-mat {
+        gap: clamp(38px, 11vw, 56px);
+    }
+    #khung-mat.canh-muon {
+        gap: 48px;
+        transform: translate(-8vw,-5.5dvh) scale(.94);
+    }
+    #khung-mat.canh-chuc {
+        gap: 46px;
+        transform: translate(-4vw,-16dvh) scale(.93);
+    }
+    #khung-mat.wish-beauty {
+        gap: clamp(38px, 11vw, 54px);
+        transform: translate(0,-5.5dvh) scale(.98);
+    }
+    #khung-mat.wish-smile {
+        gap: clamp(38px, 11vw, 54px);
+        transform: translate(-.5vw,-18dvh) scale(.88);
+    }
+    #khung-mat.wish-smile .ma-hong { opacity: .95 !important; }
+
+    /* Ảnh từ cảnh 20/10 chiếm phía dưới, để mắt và lời chúc ở trên. */
+    #anh-hai-nguoi { right: -3vw; height: var(--anh-cao); max-width: 78vw; }
+    #laCanvas { width: 88vw; }
+    #co-hoa { max-width: 100vw; }
+
+    /* Cảnh sức khỏe: tim bên phải, giữ vùng tối cho mắt và tiêu đề. */
+    #woman-scene {
+        background-size: 68vw auto;
+        background-position: 50% calc(100% - 4px);
+        background-repeat: no-repeat;
+    }
+    #woman-scene.hien-thi {
+        background-size: 74vw auto;
+        background-position: 50% calc(100% - 2px);
+    }
+    #woman-scene::before {
+        background: radial-gradient(ellipse 86vw 54dvh at 50% 71%,
+            rgba(255,72,76,.34),rgba(245,48,60,.18) 30%,rgba(210,26,42,.08) 58%,transparent 100%);
+    }
+
+    /* Ảnh GỐC toàn thân cho điện thoại: không dùng ảnh ngang đã crop. */
+    #woman-scene,
+    #woman-scene.hien-thi {
+        background-image: none !important;
+        background-color: transparent !important;
+        background-size: initial !important;
+        transform: none !important;
+        overflow: visible;
+    }
+    #woman-scene #woman-complete-mobile {
+        display: block;
+        position: absolute;
+        box-sizing: border-box;
+        right: 1vw;
+        bottom: 1.8dvh;
+        height: min(54dvh, 530px);
+        width: auto;
+        max-width: 96vw;
+        object-fit: contain;
+        object-position: center bottom;
+        opacity: 0;
+        transform: translateY(12px) scale(.97);
+        transform-origin: center bottom;
+        transition: opacity 1.7s ease-in-out, transform 2.4s cubic-bezier(.22,1,.36,1);
+        pointer-events: none;
+        filter: drop-shadow(0 0 8px rgba(248,245,255,.12));
+    }
+    #woman-scene.hien-thi #woman-complete-mobile {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+    /* Tâm sáng đỏ đi cùng trái tim được đưa vào đúng khu vực áo. */
+    #woman-scene::before {
+        background: radial-gradient(ellipse 54vw 27dvh at 64% 79%,
+            rgba(255,70,75,.26) 0%, rgba(240,35,52,.16) 28%,
+            rgba(215,25,43,.065) 62%, transparent 100%);
+    }
+
+    /* Cảnh xinh đẹp: vòng sáng ôm LYN, hoa mọc từ các cạnh. */
+    #beauty-stage .ring { top: 46%; width: 90vw; }
+    .wish-floral { width: 35vw; height: 48dvh; bottom: -12px; }
+    .wish-floral.left { left: -18px; }
+    .wish-floral.right { right: -18px; }
+    .butterfly-wrap { width: 52px; }
+    .butterfly-wrap.left { left: 6%; top: 33%; }
+    .butterfly-wrap.right { right: 5%; top: 39%; }
+
+    /* Cảnh nụ cười: LYN phía trên, Waguri phía dưới bên phải. */
+    #smile-stage .waguri-figure {
+        width: clamp(195px, 61vw, 278px);
+        height: auto; max-width: none;
+        right: -2vw; bottom: -1dvh;
+        object-fit: contain;
+    }
+    #smile-stage .waguri-aura {
+        right: -24vw; bottom: -10dvh;
+        width: 94vw; height: 58dvh;
+    }
+    #smile-stage .smile-ornament { width: 32vw; height: 36dvh; bottom: 0; }
+    #smile-stage .smile-ornament.left { left: -5vw; }
+    #smile-stage .smile-ornament.right { right: -8vw; opacity: .20; }
+
+    /* Lời hát nằm trong cột trái ở phía dưới, không chặn mắt LYN. */
+    #lyn-lyric-zone {
+        left: 3%; top: 67%; width: 47%; height: 24%;
+    }
+    #lyn-lyric-zone .lyric-line {
+        font-size: clamp(15px, 4.35vw, 20px);
+        line-height: 1.30; letter-spacing: 0;
+        min-height: 42%;
+        text-shadow: 0 0 7px rgba(255,197,220,.9), 0 0 16px rgba(255,138,195,.55);
+    }
+    #lyn-lyric-zone .lyric-line:first-child { top: 1%; }
+    #lyn-lyric-zone .lyric-line:last-child { top: 53%; }
+    #lyn-lyric-zone .lyric-line.compact { font-size: clamp(15px, 4.1vw, 19px); }
+    #music-wait-hint { max-width: 86vw; bottom: 5%; }
+}
+
+/* Nhánh điện thoại xoay ngang: giữ bố cục ngang rộng giống laptop,
+   thu kích thước những thành phần lớn vừa chiều cao thấp. */
+@media screen and (orientation: landscape) and (max-height: 600px) and (pointer: coarse) {
+    .text-layer { box-sizing: border-box; padding: 0 14px; letter-spacing: 1.4px; }
+    #text-1 { font-size: clamp(28px, 5.4vh, 42px); }
+    #text-2, #text-4 { font-size: clamp(24px, 5vh, 34px); bottom: 6%; }
+    #text-3, #text-5, #text-6, #text-7 { font-size: clamp(19px, 4.8vh, 28px); top: 5%; }
+    #text-5 { width: 57%; }
+    #text-8, #text-9 { font-size: clamp(20px, 5.6vh, 28px); top: 4%; }
+    #khung-mat { transform: scale(.63); }
+    #khung-mat.canh-muon { transform: translateX(-10vw) scale(.65); }
+    #khung-mat.canh-chuc { transform: translateX(-8vw) scale(.65); }
+    #khung-mat.wish-beauty { transform: scale(.64); }
+    #khung-mat.wish-smile { transform: translateX(-17vw) translateY(1vh) scale(.64); }
+    #anh-hai-nguoi { height: 79vh; }
+    /* Điện thoại xoay ngang cũng dùng ảnh gốc đầy đủ, không crop mất đầu. */
+    #woman-scene, #woman-scene.hien-thi {
+        background-image: none !important;
+        background-color: transparent !important;
+        transform: none !important;
+    }
+    #woman-scene #woman-complete-mobile {
+        display: block;
+        position: absolute;
+        right: 4vw;
+        bottom: -1dvh;
+        height: 85dvh;
+        width: auto;
+        max-width: 42vw;
+        object-fit: contain;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 1.7s ease-in-out;
+    }
+    #woman-scene.hien-thi #woman-complete-mobile { opacity: 1; }
+    #woman-scene::before {
+        background: radial-gradient(ellipse 37vw 55dvh at 78% 69%,
+            rgba(255,70,75,.30), rgba(225,36,50,.14) 35%, transparent 100%);
+    }
+    #smile-stage .waguri-figure { height: 88vh; width: auto; max-width: 41vw; right: 0; bottom: -1vh; }
+    #lyn-lyric-zone { left: 30%; top: 66%; width: 34%; height: 30%; }
+    #lyn-lyric-zone .lyric-line { font-size: clamp(14px,3vh,18px); line-height: 1.15; }
+    #lyn-lyric-zone .lyric-line.compact { font-size: clamp(13px,2.7vh,16px); }
+}
+
+/* ===== lyn-vinyl-desktop ===== */
+
+/* Chỉ bổ sung trang trí ở cảnh nụ cười phiên bản laptop; không tác động JS/nhạc/lyric. */
+#smile-stage .lyn-vinyl-scene {
+    position: absolute;
+    left: 62.3%;
+    top: 48.0%;
+    width: clamp(122px, 12vw, 190px);
+    aspect-ratio: 1;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 1.1s ease-in-out .23s;
+    isolation: isolate;
+}
+#smile-stage.hien-thi .lyn-vinyl-scene { opacity: 1; }
+#smile-stage .lyn-vinyl-scene::before {
+    content: '';
+    position: absolute;
+    inset: -28%;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,183,213,.14) 0%,rgba(213,158,233,.11) 37%,transparent 69%);
+    filter: blur(12px);
+    animation: vinylAura 5.2s ease-in-out infinite alternate;
+    animation-play-state: paused;
+}
+#smile-stage.hien-thi .lyn-vinyl-scene::before { animation-play-state: running; }
+#smile-stage .vinyl-record {
+    display:block;
+    position:relative;
+    width:100%;
+    height:100%;
+    border-radius:50%;
+    filter:drop-shadow(0 0 11px rgba(252,187,232,.17)) drop-shadow(0 7px 12px rgba(0,0,0,.34));
+    animation: vinylTurn 6.3s linear infinite;
+    animation-play-state:paused;
+}
+#smile-stage.hien-thi .vinyl-record { animation-play-state: running; }
+#smile-stage .vinyl-record .disc-edge { fill: #14101c; stroke: rgba(248,195,225,.66); stroke-width: 2.4; }
+#smile-stage .vinyl-record .disc-shine { fill: none; stroke: rgba(253,211,239,.14); stroke-width: 15; stroke-dasharray: 102 540; }
+#smile-stage .vinyl-record .groove { fill:none; stroke: rgba(204,177,225,.23); stroke-width:1.1; }
+#smile-stage .vinyl-record .groove:nth-child(even) { stroke:rgba(244,194,216,.14); }
+#smile-stage .vinyl-record .label-disc { fill:url(#lynVinylLabel);stroke:#f5c8dc;stroke-opacity:.8;stroke-width:1.5; }
+#smile-stage .vinyl-record .label-heart { fill:#fff1f3; opacity:.93; }
+#smile-stage .vinyl-record .spindle { fill:#ffefd3; }
+#smile-stage .vinyl-note {
+    position:absolute;
+    left:var(--nx);
+    top:var(--ny);
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size:var(--nsize);
+    font-weight:700;
+    color:var(--ncolor);
+    text-shadow: 0 0 8px rgba(255,197,224,.58),0 0 16px rgba(255,216,168,.2);
+    line-height:1;
+    opacity:0;
+    transform: translate3d(0,0,0) scale(.54) rotate(-14deg);
+    animation: vinylNoteFloat var(--ndur) cubic-bezier(.35,.1,.35,1) var(--ndelay) infinite;
+    animation-play-state:paused;
+}
+#smile-stage.hien-thi .vinyl-note { animation-play-state:running; }
+#smile-stage .vinyl-needle {
+    position:absolute;
+    right:-9%;top:-8%;
+    width:44%;height:44%;
+    overflow:visible;
+    transform-origin: 88% 8%;
+    transform:rotate(-2deg);
+    animation: vinylArmSway 5.2s ease-in-out infinite alternate;
+    animation-play-state:paused;
+    filter:drop-shadow(0 0 4px rgba(255,230,198,.24));
+}
+#smile-stage.hien-thi .vinyl-needle {animation-play-state:running;}
+@keyframes vinylTurn { to { transform:rotate(360deg); } }
+@keyframes vinylAura { from {opacity:.65;transform:scale(.94)} to {opacity:1;transform:scale(1.13)} }
+@keyframes vinylArmSway {from {transform:rotate(-2deg)} to {transform:rotate(2deg)} }
+@keyframes vinylNoteFloat {
+    0% { opacity:0; transform: translate3d(0,11px,0) scale(.65) rotate(-12deg); }
+    17% { opacity:.94; }
+    70% { opacity:.70; }
+    100% { opacity:0; transform:translate3d(var(--dx),var(--dy),0) scale(1.18) rotate(14deg); }
+}
+/* Phiên bản điện thoại giữ nguyên 100% bố cục hiện tại. */
+@media screen and (max-width: 1024px), (hover: none) and (pointer: coarse) {
+    #smile-stage .lyn-vinyl-scene { display:none!important; }
+}
+
+/* ===== lyn-kado-layout-desktop ===== */
+
+/* Chỉ tác động cảnh cuối trên laptop; nhánh mobile và JS/MP3 giữ nguyên. */
+@media (min-width:701px) and (pointer:fine) {
+ #smile-stage .lyn-vinyl-scene {
+     left: 27.1% !important;
+     top: 75.5% !important;
+     width: clamp(112px,11.5vw,180px) !important;
+     z-index: 8 !important;
+ }
+ /* Lời hát nằm kế bên đĩa, giữ cách fade hai dòng đã có */
+ /* Lyric to, rõ và vẫn đặt ngay cạnh đĩa vinyl. */
+ #lyn-lyric-zone {
+     left: 33.5% !important;
+     top: 66.5% !important;
+     width: 23.5% !important;
+     height: 31% !important;
+     z-index: 16 !important;
+ }
+ #lyn-lyric-zone .lyric-line {font-size:clamp(20px,1.9vw,31px) !important;line-height:1.19 !important;}
+ #lyn-lyric-zone .lyric-line.compact {font-size:clamp(18px,1.63vw,27px) !important;}
+ #lyn-lyric-zone .lyric-line:first-child {top:0 !important;}
+ #lyn-lyric-zone .lyric-line:last-child {top:54% !important;}
+ /* Lời chúc lớn hơn nhẹ nhưng giữ hai dòng cân đối. */
+ #text-9 {font-size:clamp(36px,3.3vw,54px) !important;line-height:1.35 !important;}
+ /* Chỉ nhánh PC: kéo Waguri sang trái vào khoảng trống đỏ, vẫn chừa chỗ cho mắt. */
+ #smile-stage .waguri-figure {right:20vw !important;bottom:-1.8vh !important;z-index:3 !important;}
+ #smile-stage .waguri-aura {right:18vw !important;}
+ #smile-stage .waguri-glimmer { opacity:.66; }
+ #smile-stage .smile-ornament.right {opacity:.14 !important;}
+ #smile-stage #kado-flower-frame {
+    position:absolute;
+    right:-1%; bottom:-1.5%;
+    width:27%; height:78%;
+    border:0; display:block;
+    pointer-events:none; z-index:2;
+    background:transparent;
+    opacity:0;
+    transform:translateY(20px) scale(.93);
+    transform-origin:bottom center;
+    transition: opacity 1.8s ease-out .10s,transform 2.6s cubic-bezier(.22,1,.36,1);
+ }
+ #smile-stage.hien-thi #kado-flower-frame {opacity:1;transform:translateY(0) scale(1);}
+}
+@media (max-width:700px), (pointer:coarse) {
+  #kado-flower-frame {display:none !important;}
+}
+
+/* === CẢNH TẶNG CỎ: dùng đúng cây SVG của co-bon-la-phat-sang-1.html ===
+   Chỉ bật cảnh này sau click từ "giữ nụ cười"; tất cả cảnh trước không thay đổi. */
+#clover-blackout {
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    pointer-events: none;
+    background: #000;
+    opacity: 0;
+    transition: opacity 1.25s ease-in-out;
+}
+body.clover-scene #clover-blackout { opacity: 1; }
+body.clover-scene #khung-mat { z-index: 6; }
+/* Chuyển đổi từ các lớp sao/hoạt ảnh cũ sang nền đen không lốm đốm. */
+body.clover-scene #uiverse-starfield,
+body.clover-scene #lyn-sky,
+body.clover-scene #lower-stars,
+body.clover-scene #sao-vu-tru,
+body.clover-scene #vien-vu-tru {
+    opacity: 0 !important;
+    transition: opacity 1.05s ease-in-out !important;
+}
+#wish-backdrop.clover { background: none !important; }
+#wish-backdrop.clover-give {
+    opacity:1;
+    background:radial-gradient(ellipse 60vw 72vh at 50% 50%, rgba(118,180,255,.20) 0%, rgba(77,151,255,.12) 34%, rgba(18,35,68,.06) 62%, transparent 84%) !important;
+    animation: cloverGiveBlue 2.65s ease-in-out forwards;
+}
+@keyframes cloverGiveBlue {
+    0%   { opacity:0; }
+    54%  { opacity:0; }
+    70%  { opacity:.88; }
+    86%  { opacity:.46; }
+    100% { opacity:0; }
+}
+#khung-mat.wish-clover .truc-x.clover-opening-eye > .con-mat {
+    opacity:1 !important;
+}
+#clover-stage.give-away .clover-sample-garden {
+    animation: cloverGiftRiseFade 2.45s cubic-bezier(.22,1,.36,1) forwards !important;
+}
+#clover-stage.give-away .clover-sample-glow {
+    animation: cloverGiftGlow 2.45s ease-in-out forwards !important;
+}
+#clover-stage.give-away .clover-ambient {
+    animation: cloverGiftAmbient 2.45s ease-in-out forwards !important;
+}
+#clover-stage.give-away .clover-particle-field {
+    animation: cloverGiftParticles 2.1s ease-out forwards;
+}
+@keyframes cloverGiftRiseFade {
+    0%   { opacity:1; transform:translateY(-10px); }
+    52%  { opacity:1; transform:translateY(-10px); }
+    74%  { opacity:1; transform:translateY(40px); }
+    100% { opacity:0; transform:translateY(150px); }
+}
+@keyframes cloverGiftGlow {
+    0%   { opacity:.92; filter:blur(4px) brightness(1); transform:translate(-50%,-50%); }
+    52%  { opacity:1; filter:blur(10px) brightness(1.75); transform:translate(-50%,-50%); }
+    74%  { opacity:.82; filter:blur(12px) brightness(1.35); transform:translate(-50%,-50%); }
+    100% { opacity:0; filter:blur(8px) brightness(1.05); transform:translate(-50%,-50%); }
+}
+@keyframes cloverGiftAmbient {
+    0%   { opacity:.82; }
+    52%  { opacity:1; }
+    74%  { opacity:.84; }
+    100% { opacity:0; }
+}
+@keyframes cloverGiftParticles {
+    from { opacity:1; }
+    to   { opacity:0; }
+}
+#clover-stage { z-index: 5; }
+#clover-stage .clover-ambient {
+    position: absolute;
+    inset: 0;
+    background:
+       radial-gradient(ellipse 86vw 104vh at 81% 53%, rgba(104,255,148,.44), rgba(38,150,67,.22) 36%, rgba(14,48,24,.10) 59%, transparent 79%),
+       radial-gradient(ellipse 138vw 122vh at 58% 58%, rgba(72,196,108,.19), rgba(18,56,29,.06) 60%, transparent 84%),
+       linear-gradient(rgba(18,36,24,.10), rgba(18,36,24,.10));
+    pointer-events:none;
+    filter: blur(1px);
+    animation: cloverSampleAmbient 4.2s ease-in-out infinite alternate;
+}
+#clover-stage .clover-particle-field { position:absolute; inset:0; overflow:hidden; pointer-events:none; }
+#clover-stage .clover-particle {
+    position:absolute;
+    pointer-events:none;
+    border-radius:50%;
+    background: radial-gradient(circle,#eaffd8 0%,rgba(110,255,150,.85) 45%,rgba(60,230,120,0) 75%);
+    box-shadow:0 0 7px rgba(105,245,140,.26);
+}
+#clover-stage .clover-firefly {
+    position:absolute;
+    pointer-events:none;
+    border-radius:50%;
+    background: radial-gradient(circle, rgba(252,255,214,1) 0%, rgba(214,255,154,.98) 28%, rgba(140,255,139,.78) 52%, rgba(120,255,120,0) 78%);
+    box-shadow: 0 0 12px rgba(218,255,176,.78), 0 0 26px rgba(144,255,126,.44), 0 0 42px rgba(125,255,130,.18);
+    opacity:.18;
+    will-change:transform, opacity;
+    animation:
+      cloverFireflyFloat var(--fly-dur, 5.8s) ease-in-out var(--fly-delay, 0s) infinite alternate,
+      cloverFireflyBlink var(--blink-dur, 2.6s) ease-in-out var(--blink-delay, 0s) infinite;
+}
+@keyframes cloverFireflyFloat {
+    0%   { transform: translate(0px, 4px) scale(.78); }
+    50%  { transform: translate(calc(var(--dx, 12px) * .5), calc(var(--dy, -18px) * .5)) scale(1); }
+    100% { transform: translate(var(--dx, 12px), var(--dy, -18px)) scale(.88); }
+}
+@keyframes cloverFireflyBlink {
+    0%, 100% { opacity: .16; }
+    18% { opacity: .40; }
+    42% { opacity: .92; }
+    68% { opacity: .52; }
+    86% { opacity: .84; }
+}
+/* Trên PC: cỏ được đặt BÊN PHẢI đôi mắt, không ở giữa hai mắt. */
+#clover-stage .clover-sample-garden {
+    position:absolute;
+    top:29%;
+    right:8%;
+    width:clamp(176px,20vw,305px);
+    aspect-ratio:240 / 400;
+    opacity:0;
+    transform:translateY(92px) scale(.84);
+    transition:opacity 1.3s ease .18s, transform 2.0s cubic-bezier(.18,.9,.2,1) .18s;
+}
+#clover-stage.hien-thi .clover-sample-garden { opacity:1; transform:translateY(-10px) scale(1.06); animation: cloverSampleFloat 4.4s ease-in-out 1.7s infinite alternate; }
+#clover-stage .clover-sample-glow {
+    position:absolute;
+    left:50%;top:21%;width:178%;aspect-ratio:1;
+    transform:translate(-50%,-50%);
+    border-radius:50%;pointer-events:none;
+    background:radial-gradient(circle,rgba(118,255,172,.88) 0%,rgba(82,255,146,.46) 18%,rgba(42,220,113,.20) 38%,rgba(18,146,75,.10) 58%,transparent 75%);
+    filter: blur(4px);
+    animation:cloverSampleBreath 2.9s ease-in-out infinite alternate;
+}
+#clover-stage .clover-sample-garden svg {
+    position:relative;
+    width:100%;height:100%;overflow:visible;display:block;
+}
+#clover-stage .clover-sample-plant {
+    filter:drop-shadow(0 0 14px rgba(110,255,172,1)) drop-shadow(0 0 34px rgba(52,245,128,.92)) drop-shadow(0 0 86px rgba(30,200,90,.72));
+    animation:cloverSampleShine 2.8s ease-in-out infinite alternate;
+    transform-origin:50% 100%;
+}
+#clover-stage .clover-sample-sway {
+    transform-origin:50% 100%;
+    animation:cloverSampleSway 5s ease-in-out infinite alternate;
+}
+#clover-stage .clover-sample-leaf {
+    transform-box:fill-box; transform-origin:50% 100%;
+    animation:cloverSampleLeaf 2.8s ease-in-out infinite alternate;
+}
+@keyframes cloverSampleAmbient {from {opacity:.72;} to {opacity:1;}}
+@keyframes cloverSampleBreath {
+    from {opacity:.78;transform:translate(-50%,-50%) scale(.90)}
+    to {opacity:1;transform:translate(-50%,-50%) scale(1.16)}
+}
+@keyframes cloverSampleShine {
+    from {filter:drop-shadow(0 0 10px rgba(98,255,162,.92)) drop-shadow(0 0 28px rgba(52,238,123,.72)) drop-shadow(0 0 60px rgba(31,201,93,.46))}
+    to {filter:drop-shadow(0 0 18px rgba(138,255,190,1)) drop-shadow(0 0 46px rgba(76,255,148,.98)) drop-shadow(0 0 112px rgba(41,214,100,.86))}
+}
+@keyframes cloverSampleSway {from {transform:rotate(-1.9deg)} to {transform:rotate(1.9deg)}}
+@keyframes cloverSampleLeaf {from {transform:rotate(-3.6deg) scale(.98)} to {transform:rotate(3.6deg) scale(1.05)}}
+@keyframes cloverSampleFloat {from {transform:translateY(-10px) scale(1.06)} to {transform:translateY(-18px) scale(1.085)}}
+#khung-mat.wish-clover {
+    transform:translateX(-4vw) translateY(1vh) scale(.95);
+    gap:120px;
+    transition:transform 1.35s cubic-bezier(.22,1,.36,1),gap 1.1s ease;
+}
+#khung-mat.wish-clover .mat-cong {opacity:0!important;animation:none!important;}
+#khung-mat.wish-clover .con-mat {
+    visibility:visible!important;
+    border-radius:30px;
+    box-shadow:0 0 26px 9px rgba(0,255,255,.56),0 0 52px 16px rgba(0,255,255,.28),inset 0 0 22px rgba(255,255,255,.80);
+}
+#khung-mat.wish-clover .ma-hong {
+    opacity:.96!important;
+    color:rgba(255,167,203,.96)!important;
+    transform:translateX(-50%) translateY(-4px) scale(1.12);
+    text-shadow:0 0 10px rgba(255,176,210,.25);
+}
+#text-10 {top:11.5%;padding-inline:16px;}
+@media screen and (max-width:700px) and (orientation:portrait) {
+    #clover-stage .clover-sample-garden {width:clamp(150px,42vw,198px);top:48%;right:4.5%;}
+    #clover-stage.hien-thi .clover-sample-garden {transform:translateY(-6px) scale(1.02);}
+    #clover-stage .clover-ambient {
+        background:
+          radial-gradient(ellipse 112vw 86vh at 78% 60%,rgba(92,247,128,.36),rgba(24,95,42,.14) 60%,transparent 94%),
+          linear-gradient(rgba(18,40,24,.12), rgba(18,40,24,.12));
+    }
+    #khung-mat.wish-clover {gap:58px;transform:translate(-4vw,-7dvh) scale(.68);}
+    #khung-mat.wish-clover .truc-x { width:152px; height:152px; }
+    #khung-mat.wish-clover .con-mat { width:146px; height:146px; border-radius:24px; }
+    #text-10, #text-11 {top:8%;font-size:clamp(20px,5.9vw,28px);line-height:1.46;letter-spacing:.5px;}
+}
+@media screen and (orientation:landscape) and (max-height:600px) and (pointer:coarse) {
+    #clover-stage .clover-sample-garden {width:min(24vw,176px);top:21%;right:6%;}
+    #clover-stage .clover-ambient {background:radial-gradient(ellipse 76vw 100vh at 81% 56%,rgba(91,244,131,.32),rgba(14,58,28,.08) 66%,transparent 92%);}
+    #khung-mat.wish-clover {transform:translate(-6vw,0) scale(.60);gap:100px;}
+    #text-10, #text-11 {top:4%;font-size:clamp(18px,4.6vh,26px);}
+}
+
+/* ===== luck-scene-visibility-tuning ===== */
+
+/* Chỉ thay đổi cảnh chúc may mắn. Không tác động những cảnh trước. */
+#text-12 {
+    width: min(92vw, 1120px);
+    left: 50%;
+    top: 9.1%;
+    transform: translateX(-50%);
+    font-size: clamp(29px, 2.6vw, 43px);
+    letter-spacing: clamp(.8px, .16vw, 2px);
+    line-height: 1.36;
+    padding-inline: 18px;
+    text-wrap: balance;
+    text-shadow: 0 0 12px rgba(255,255,255,.67), 0 0 26px rgba(180,255,200,.17);
+}
+#text-12 .luck-green-words {
+    color: #73ff96;
+    text-shadow: 0 0 10px rgba(97,255,137,.94), 0 0 26px rgba(40,229,95,.54);
+}
+/* Nét bốn lá nổi rõ hơn nhưng vẫn nằm SAU mắt LYN. */
+#luck-stage .luck-bg-clover {
+    left: 51%; top: 55%;
+    width: min(60vw, 465px);
+}
+#luck-stage.active .luck-bg-clover {
+    opacity: .69;
+    filter: drop-shadow(0 0 11px rgba(114,255,166,.65))
+            drop-shadow(0 0 32px rgba(48,230,107,.33));
+}
+#luck-stage .luck-bg-clover .luck-bg-svg path:not([style*="fill:none"]) {
+    fill: rgba(21,82,47,.37);
+    stroke: #87ffae;
+    stroke-width: 2.6px;
+}
+#luck-stage .luck-bg-clover .luck-bg-svg path[style*="fill:none"] {
+    fill: none;
+    stroke: #74f79e;
+    stroke-width: 2.6px;
+}
+#luck-stage .luck-bg-clover .luck-bg-svg {
+    filter: drop-shadow(0 0 5px rgba(118,255,171,.75))
+            drop-shadow(0 0 17px rgba(50,240,108,.43));
+}
+@media (max-width:700px) and (orientation:portrait) {
+    #text-12 {
+        width: 96vw;
+        top: 7.3%;
+        font-size: clamp(22px, 5.5vw, 29px);
+        line-height:1.4;
+        letter-spacing:.7px;
+        padding-inline:12px;
+    }
+    #luck-stage .luck-bg-clover {
+        width: min(74vw, 320px);
+        left: 50%; top: 56%;
+    }
+    #luck-stage.active .luck-bg-clover { opacity:.61; }
+}
+@media (orientation:landscape) and (max-height:600px) and (pointer:coarse) {
+    #text-12 {
+        top:4%;
+        font-size:clamp(22px, 4.8vh, 31px);
+        line-height:1.28;
+    }
+}
+
+/* ===== last-two-clover-scenes-polish ===== */
+
+/* Center the full pair, not just the individual eyes; do not affect the preceding scene. */
+#khung-mat.wish-clover.gift-centered,
+#khung-mat.wish-clover.wish-luck {
+    transform: translate(0, 0) scale(.95) !important;
+    gap: 120px !important;
+}
+#khung-mat.wish-clover.gift-centered .truc-x,
+#khung-mat.wish-clover.wish-luck .truc-x { transform: translate(0,0) !important; }
+#khung-mat.wish-clover.gift-centered .ma-hong,
+#khung-mat.wish-clover.wish-luck .ma-hong {
+    left:50%; top:175px; transform:translateX(-50%) !important;
+}
+/* Soft translucent green clover, off to the right and below the eyes; it does not obscure them. */
+#luck-stage .luck-bg-clover {
+    left:76%; top:72%;
+    width:min(32vw,365px);
+    transform:translate(-50%,-50%) rotate(90deg) scale(.92);
+    transform-origin:50% 50%;
+}
+#luck-stage.active .luck-bg-clover {
+    opacity:.83;
+    transform:translate(-50%,-50%) rotate(90deg) scale(1);
+    filter:drop-shadow(0 0 12px rgba(95,255,149,.62)) drop-shadow(0 0 26px rgba(63,238,117,.32));
+}
+#luck-stage .luck-bg-clover .luck-bg-svg path:not([style*="fill:none"]) {
+    fill:rgba(49,197,100,.19) !important;
+    stroke:rgba(144,255,176,.92) !important;
+    stroke-width:2.8px;
+}
+#luck-stage .luck-bg-clover .luck-bg-svg path[style*="fill:none"] {
+    fill:none !important; stroke:rgba(132,255,169,.86) !important;
+}
+#luck-stage .luck-bg-clover .luck-bg-svg {
+    filter:drop-shadow(0 0 7px rgba(105,255,155,.75)) drop-shadow(0 0 18px rgba(62,225,112,.45));
+}
+@media screen and (max-width:700px) and (orientation:portrait) {
+    #khung-mat.wish-clover.gift-centered,
+    #khung-mat.wish-clover.wish-luck {
+        transform:translate(0, -5dvh) scale(.68) !important;
+        gap:70px !important;
+    }
+    #khung-mat.wish-clover.gift-centered .ma-hong,
+    #khung-mat.wish-clover.wish-luck .ma-hong {
+        top:164px !important; left:50%; transform:translateX(-50%) !important;
+        font-size:1.18rem; letter-spacing:2px;
+    }
+    #luck-stage .luck-bg-clover { left:61%; top:72%; width:min(53vw,222px); }
+    #luck-stage.active .luck-bg-clover {opacity:.75;}
+}
+@media screen and (orientation:landscape) and (max-height:600px) and (pointer:coarse) {
+    #khung-mat.wish-clover.gift-centered,
+    #khung-mat.wish-clover.wish-luck {
+        transform:translate(0,0) scale(.60) !important; gap:110px !important;
+    }
+    #luck-stage .luck-bg-clover {left:75%; top:63%; width:min(23vw,240px);}
+}
+
+/* ===== lyn-question-final-scene ===== */
+
+#text-13 {
+    top: 10.2%;
+    padding-inline: 20px;
+    text-align: center;
+    line-height: 1.42;
+    text-shadow: 0 0 12px rgba(255,255,255,.78), 0 0 26px rgba(115,165,255,.20);
+}
+#text-13 .question-blue-words {
+    color: #7fd2ff;
+    text-shadow:
+        0 0 10px rgba(140,220,255,.95),
+        0 0 26px rgba(86,175,255,.82),
+        0 0 58px rgba(55,132,255,.50),
+        0 0 110px rgba(55,132,255,.26);
+}
+#question-stage {
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    opacity: 0;
+    pointer-events: none;
+    overflow: hidden;
+    transition: opacity .95s ease;
+}
+#question-stage.hien-thi { opacity: 1; }
+#question-stage::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 22%, rgba(56,155,255,.16) 0%, rgba(21,85,180,.09) 22%, rgba(0,0,0,0) 62%);
+    opacity: .18;
+    transition: opacity 1.15s ease;
+}
+#question-stage.active::before { opacity: .92; }
+#question-stage .question-blue-glow {
+    position: absolute;
+    left: 50%;
+    top: 21%;
+    width: min(96vw, 1120px);
+    height: min(76vh, 700px);
+    transform: translate(-50%, -50%) scale(.68);
+    border-radius: 50%;
+    background: radial-gradient(ellipse at center,
+        rgba(196,235,255,.58) 0%,
+        rgba(113,195,255,.38) 14%,
+        rgba(56,132,255,.24) 28%,
+        rgba(18,69,185,.12) 45%,
+        rgba(0,0,0,0) 72%);
+    filter: blur(26px);
+    opacity: 0;
+    transition: opacity 1.08s ease, transform 1.08s cubic-bezier(.22,1,.36,1);
+}
+#question-stage.active .question-blue-glow {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+#question-stage .question-blue-rays {
+    position: absolute;
+    inset: -8%;
+    background:
+        radial-gradient(circle at 50% 10%, rgba(210,240,255,.22) 0%, transparent 24%),
+        conic-gradient(from 258deg at 50% 10%,
+            transparent 0deg 17deg,
+            rgba(108,198,255,.22) 22deg,
+            transparent 33deg 42deg,
+            rgba(57,140,255,.20) 48deg,
+            transparent 58deg 64deg,
+            rgba(129,214,255,.18) 69deg,
+            transparent 80deg 360deg);
+    filter: blur(15px);
+    opacity: 0;
+    transform: scale(1.08);
+    transition: opacity 1.2s ease, transform 1.2s ease;
+}
+#question-stage.active .question-blue-rays {
+    opacity: .96;
+    transform: scale(1);
+}
+#question-stage .question-space-haze {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 40%, rgba(55,132,255,.10) 0%, rgba(23,49,110,.05) 24%, rgba(0,0,0,0) 60%);
+    opacity: 0;
+    transition: opacity 1.15s ease;
+}
+#question-stage.active .question-space-haze { opacity: 1; }
+#luck-stage.fading-out,
+#luck-front-field.fading-out { opacity: 0 !important; }
+@keyframes luckEyeSwayA {
+    0%,100% { transform: translate(0,0) rotate(0deg); }
+    50% { transform: translate(-1px,-2px) rotate(-1.1deg); }
+}
+@keyframes luckEyeSwayB {
+    0%,100% { transform: translate(0,0) rotate(0deg); }
+    50% { transform: translate(1px,2px) rotate(1.1deg); }
+}
+#khung-mat.wish-luck .truc-x:first-child {
+    animation: luckEyeSwayA 3.5s ease-in-out infinite;
+}
+#khung-mat.wish-luck .truc-x:last-child {
+    animation: luckEyeSwayB 3.9s ease-in-out infinite;
+}
+#khung-mat.question-one-eye {
+    transform: translate(0, 8px) rotate(-7deg) scale(1.01) !important;
+    transition: transform .55s cubic-bezier(.22,1,.36,1);
+}
+#khung-mat.question-one-eye .truc-x { animation: none !important; }
+#khung-mat.question-one-eye .con-mat {
+    border-radius: 30px;
+    box-shadow: 0 0 24px 9px rgba(0,255,255,.52), 0 0 46px 14px rgba(55,132,255,.20), inset 0 0 22px rgba(255,255,255,.80);
+}
+#khung-mat.question-one-eye .ma-hong {
+    opacity: .97 !important;
+    color: rgba(255,172,206,.97) !important;
+}
+#khung-mat.question-one-eye .truc-x:last-child .con-mat.hold-closed {
+    transform: scaleY(.055) !important;
+    transition: transform .32s cubic-bezier(.4,0,.2,1);
+}
+#khung-mat.question-one-eye .truc-x:last-child .mat-cong.hold-closed {
+    opacity: 1 !important;
+    filter: drop-shadow(0 0 10px rgba(0,255,255,.70)) drop-shadow(0 0 24px rgba(109,190,255,.35));
+}
+#khung-mat.question-one-eye .truc-x:first-child .con-mat {
+    animation: questionOpenEyeBob 3.1s ease-in-out infinite;
+}
+@keyframes questionOpenEyeBob {
+    0%,100% { transform: scaleY(1) translateY(0); }
+    50% { transform: scaleY(1) translateY(-2px); }
+}
+body.question-scene-body { background: #000; }
+@media screen and (max-width:700px) and (orientation:portrait) {
+    #text-13 {
+        top: 8.8%;
+        font-size: clamp(21px, 6vw, 31px);
+        line-height: 1.36;
+        padding-inline: 18px;
+    }
+    #question-stage .question-blue-glow {
+        top: 18%;
+        width: min(108vw, 520px);
+        height: min(48vh, 340px);
+        filter: blur(18px);
+    }
+    #question-stage .question-blue-rays { filter: blur(11px); }
+    #khung-mat.question-one-eye {
+        transform: translate(0, -4dvh) rotate(-7deg) scale(.72) !important;
+    }
+}
+@media screen and (orientation:landscape) and (max-height:600px) and (pointer:coarse) {
+    #text-13 { top: 4.6%; font-size: clamp(18px, 4.8vh, 31px); }
+    #khung-mat.question-one-eye {
+        transform: translate(0, 0) rotate(-7deg) scale(.60) !important;
+    }
+}
+
+/* ===== lyn-question-diagonal-final-fix ===== */
+
+/* Dùng đường chéo đi xuống bên phải theo nét trắng người dùng vẽ.
+   Phải thắng rule #khung-mat.wish-clover.wish-luck { transform: ... !important }. */
+#khung-mat.wish-clover.wish-luck.question-one-eye {
+    transform: translate(0, 7px) rotate(14deg) scale(.97) !important;
+    transform-origin: 50% 50%;
+    transition: transform .56s cubic-bezier(.22,1,.36,1) !important;
+}
+#khung-mat.wish-clover.wish-luck.question-one-eye .truc-x {
+    animation: none !important;
+}
+#khung-mat.wish-clover.wish-luck.question-one-eye .truc-x:first-child .con-mat {
+    animation: none !important;
+    transform: scaleY(1) !important;
+}
+/* Khép mắt phải thành nét mềm, cong rất nhẹ, dày hơn thanh ngang cũ.
+   Phần vuông thu xuống trước khi nhường chỗ cho cung SVG. */
+#khung-mat.wish-clover.wish-luck.question-one-eye .truc-x:last-child > .con-mat.hold-closed {
+    transform: scaleY(.045) !important;
+    opacity: 0 !important;
+    transition: transform .30s cubic-bezier(.4,0,.2,1), opacity .14s ease .19s !important;
+}
+#khung-mat.wish-clover.wish-luck.question-one-eye .truc-x:last-child > .mat-cong {
+    position: absolute;
+    top: 36px;
+    left: 0;
+    width: 160px;
+    height: 70px;
+    transform: none !important;
+    animation: none !important;
+    z-index: 6;
+    opacity: 0 !important;
+    transition: opacity .15s ease !important;
+    filter: drop-shadow(0 0 7px rgba(0,255,255,.98)) drop-shadow(0 0 16px rgba(53,206,255,.64));
+}
+#khung-mat.wish-clover.wish-luck.question-one-eye .truc-x:last-child > .mat-cong.hold-closed {
+    opacity: 1 !important;
+}
+#khung-mat.wish-clover.wish-luck.question-one-eye .truc-x:last-child > .mat-cong path {
+    fill: none !important;
+    stroke: #90ffff !important;
+    stroke-width: 15px !important;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+#text-13 {
+    top: 10.2%;
+    width: 100%;
+    padding-inline: 18px;
+    box-sizing: border-box;
+    font-size: clamp(40px, 4.1vw, 68px) !important;
+    font-weight: 700;
+    letter-spacing: 2.1px;
+    line-height: 1.35;
+    text-align: center;
+    z-index: 12;
+    text-shadow: 0 0 12px rgba(255,255,255,.65), 0 0 25px rgba(198,224,255,.25);
+}
+#text-13 .question-blue-words {
+    color: #85d6ff;
+    white-space: nowrap;
+    text-shadow:
+        0 0 8px rgba(227,252,255,.97),
+        0 0 21px rgba(101,196,255,.92),
+        0 0 43px rgba(49,145,255,.72),
+        0 0 94px rgba(27,99,240,.47);
+}
+/* Toạ độ gốc được JS đo theo getBoundingClientRect() của span "có thể?". */
+#question-stage {
+    --word-x: 50vw;
+    --word-y: 17vh;
+}
+#question-stage::before {
+    background: radial-gradient(ellipse 83vw 88vh at var(--word-x) var(--word-y),
+        rgba(95,182,255,.22) 0%, rgba(32,104,238,.14) 24%, rgba(8,48,126,.075) 42%, transparent 72%);
+}
+#question-stage .question-blue-glow {
+    left: var(--word-x);
+    top: var(--word-y);
+    width: min(130vw, 1600px);
+    height: min(135vh, 1150px);
+    background: radial-gradient(ellipse at center,
+        rgba(196,241,255,.65) 0%,
+        rgba(112,204,255,.44) 10%,
+        rgba(59,139,255,.29) 24%,
+        rgba(24,81,206,.15) 44%,
+        rgba(5,29,108,.065) 59%, transparent 78%);
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(.16);
+    filter: blur(27px);
+    transition: opacity 1.25s ease, transform 1.35s cubic-bezier(.22,1,.36,1);
+}
+#question-stage.active .question-blue-glow {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+#question-stage .question-blue-rays {
+    background:
+      radial-gradient(ellipse 33vw 38vh at var(--word-x) var(--word-y),rgba(183,238,255,.23),transparent 85%),
+      conic-gradient(from 90deg at var(--word-x) var(--word-y),
+        transparent 0deg 14deg,rgba(71,168,255,.14) 24deg,transparent 34deg 46deg,
+        rgba(119,217,255,.15) 57deg,transparent 68deg 85deg,
+        rgba(51,145,255,.11) 102deg,transparent 118deg 178deg,
+        rgba(86,172,255,.12) 203deg,transparent 216deg 267deg,
+        rgba(90,191,255,.10) 279deg,transparent 294deg 360deg);
+    filter: blur(19px);
+}
+@media screen and (max-width:700px) and (orientation:portrait) {
+    #text-13 {
+        top: 9.4%;
+        font-size: clamp(28px, 7.7vw, 38px) !important;
+        letter-spacing: .5px;
+        line-height: 1.48;
+        padding-inline: 10px;
+    }
+    #khung-mat.wish-clover.wish-luck.question-one-eye {
+        transform: translate(0,-4dvh) rotate(13deg) scale(.68) !important;
+    }
+    #question-stage .question-blue-glow {
+        width: 160vw;
+        height: 82vh;
+        filter: blur(20px);
+    }
+}
+@media screen and (orientation:landscape) and (max-height:600px) and (pointer:coarse) {
+    #text-13 {
+        top: 4.4%;
+        font-size: clamp(26px, 5.6vh, 45px) !important;
+    }
+    #khung-mat.wish-clover.wish-luck.question-one-eye {
+        transform: translate(0,0) rotate(13deg) scale(.60) !important;
+    }
+}
+
+/* ===== lyn-question-user-fix ===== */
+
+/* giảm độ chói chữ, vẫn giữ phát sáng nhẹ */
+#text-13 {
+    text-shadow: 0 0 8px rgba(255,255,255,.42), 0 0 18px rgba(188,214,255,.14) !important;
+}
+#text-13 .question-blue-words {
+    text-shadow:
+        0 0 5px rgba(227,252,255,.72),
+        0 0 13px rgba(101,196,255,.58),
+        0 0 26px rgba(49,145,255,.36),
+        0 0 54px rgba(27,99,240,.18) !important;
+}
+#question-stage::before {
+    opacity: .58 !important;
+}
+#question-stage .question-blue-glow {
+    filter: blur(22px) !important;
+}
+#question-stage .question-blue-rays {
+    opacity: .72 !important;
+    filter: blur(17px) !important;
+}
+/* đung đưa nhẹ cho cả đôi mắt ở cảnh câu hỏi */
+#khung-mat.wish-clover.wish-luck.question-one-eye {
+    animation: lynQuestionSway 4.1s ease-in-out infinite;
+}
+@keyframes lynQuestionSway {
+    0%,100% { transform: translate(0, 7px) rotate(14deg) scale(.97); }
+    25% { transform: translate(-3px, 5px) rotate(12.7deg) scale(.972); }
+    50% { transform: translate(1px, 9px) rotate(15.2deg) scale(.968); }
+    75% { transform: translate(3px, 6px) rotate(13.4deg) scale(.972); }
+}
+/* mắt trái nhắm thay vì mắt phải */
+#khung-mat.wish-clover.wish-luck.question-one-eye .truc-x:first-child > .con-mat.hold-closed {
+    transform: scaleY(.045) !important;
+    opacity: 0 !important;
+    transition: transform .30s cubic-bezier(.4,0,.2,1), opacity .14s ease .19s !important;
+}
+#khung-mat.wish-clover.wish-luck.question-one-eye .truc-x:first-child > .mat-cong {
+    position: absolute;
+    top: 36px;
+    left: 0;
+    width: 160px;
+    height: 70px;
+    transform: none !important;
+    animation: none !important;
+    z-index: 6;
+    opacity: 0 !important;
+    transition: opacity .15s ease !important;
+    filter: drop-shadow(0 0 7px rgba(0,255,255,.98)) drop-shadow(0 0 16px rgba(53,206,255,.64));
+}
+#khung-mat.wish-clover.wish-luck.question-one-eye .truc-x:first-child > .mat-cong.hold-closed {
+    opacity: 1 !important;
+}
+#khung-mat.wish-clover.wish-luck.question-one-eye .truc-x:first-child > .mat-cong path {
+    fill: none !important;
+    stroke: #90ffff !important;
+    stroke-width: 15px !important;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+/* mắt còn lại mở + bob nhẹ */
+#khung-mat.wish-clover.wish-luck.question-one-eye .truc-x:last-child .con-mat {
+    animation: questionOpenEyeBob 3.1s ease-in-out infinite !important;
+}
+/* vô hiệu hoá rule cũ cho mắt phải */
+#khung-mat.wish-clover.wish-luck.question-one-eye .truc-x:last-child > .con-mat.hold-closed {
+    transform: scaleY(1) !important;
+    opacity: 1 !important;
+}
+#khung-mat.wish-clover.wish-luck.question-one-eye .truc-x:last-child > .mat-cong.hold-closed {
+    opacity: 0 !important;
+}
+@media screen and (max-width:700px) and (orientation:portrait) {
+    #khung-mat.wish-clover.wish-luck.question-one-eye {
+        animation: lynQuestionSwayMobile 4.1s ease-in-out infinite;
+    }
+    @keyframes lynQuestionSwayMobile {
+        0%,100% { transform: translate(0,-4dvh) rotate(13deg) scale(.68); }
+        25% { transform: translate(-2px,calc(-4dvh - 2px)) rotate(11.9deg) scale(.682); }
+        50% { transform: translate(2px,calc(-4dvh + 2px)) rotate(14.2deg) scale(.678); }
+        75% { transform: translate(3px,calc(-4dvh - 1px)) rotate(12.5deg) scale(.681); }
+    }
+}
+@media screen and (orientation:landscape) and (max-height:600px) and (pointer:coarse) {
+    #khung-mat.wish-clover.wish-luck.question-one-eye {
+        animation: lynQuestionSwayLand 4.1s ease-in-out infinite;
+    }
+    @keyframes lynQuestionSwayLand {
+        0%,100% { transform: translate(0,0) rotate(13deg) scale(.60); }
+        25% { transform: translate(-2px,-1px) rotate(12deg) scale(.602); }
+        50% { transform: translate(2px,2px) rotate(14.1deg) scale(.598); }
+        75% { transform: translate(2px,0) rotate(12.8deg) scale(.601); }
+    }
+}
+
+/* ===== lyn-question-waguri-wink-final ===== */
+
+/* Bỏ toàn bộ nét cong CSS cũ; trạng thái nhắm giờ do SVG Waguri thật đảm nhiệm. */
+#khung-mat.question-one-eye .mat-cong,
+#khung-mat.wish-clover.wish-luck.question-one-eye .mat-cong {
+    opacity:0 !important;
+    visibility:hidden !important;
+}
+#khung-mat.question-one-eye .question-hold-wink {
+    opacity:1;
+}
+/* Khi reference-wink-active, chỉ SVG hiện; má hồng vẫn giữ nguyên. */
+#khung-mat.question-one-eye .truc-x.reference-wink-active .con-mat {
+    opacity:0 !important;
+}
+#khung-mat.question-one-eye .truc-x.reference-wink-active .ma-hong {
+    opacity:.97 !important;
+    z-index:8;
+}
+/* Đung đưa nhẹ, không phá góc chéo đã yêu cầu. */
+#khung-mat.wish-clover.wish-luck.question-one-eye {
+    animation: lynQuestionWaguriSway 4.6s ease-in-out .24s infinite !important;
+}
+@keyframes lynQuestionWaguriSway {
+    0%,100% { transform:translate(0,7px) rotate(14deg) scale(.97); }
+    25% { transform:translate(-2px,5px) rotate(13.2deg) scale(.971); }
+    50% { transform:translate(1px,9px) rotate(14.8deg) scale(.969); }
+    75% { transform:translate(2px,6px) rotate(13.5deg) scale(.971); }
+}
+/* Chữ dịu hơn bản chói trước. */
+#text-13 {
+    text-shadow:0 0 7px rgba(255,255,255,.36),0 0 16px rgba(190,218,255,.11) !important;
+}
+#text-13 .question-blue-words {
+    text-shadow:
+      0 0 5px rgba(225,249,255,.62),
+      0 0 12px rgba(101,196,255,.46),
+      0 0 24px rgba(49,145,255,.27),
+      0 0 48px rgba(27,99,240,.13) !important;
+}
+#question-stage.active::before { opacity:.54 !important; }
+#question-stage.active .question-blue-rays { opacity:.62 !important; }
+@media screen and (max-width:700px) and (orientation:portrait) {
+  #khung-mat.wish-clover.wish-luck.question-one-eye {
+      animation:lynQuestionWaguriSwayMobile 4.6s ease-in-out .24s infinite !important;
+  }
+  @keyframes lynQuestionWaguriSwayMobile {
+      0%,100% { transform:translate(0,-4dvh) rotate(13deg) scale(.68); }
+      25% { transform:translate(-1px,calc(-4dvh - 1px)) rotate(12.3deg) scale(.681); }
+      50% { transform:translate(1px,calc(-4dvh + 2px)) rotate(13.8deg) scale(.679); }
+      75% { transform:translate(2px,calc(-4dvh - 1px)) rotate(12.6deg) scale(.681); }
+  }
+}
+
+/* ===== question-wink-return-and-slow-blink ===== */
+
+/* Mắt tự xoay theo SVG nguyên bản của cảnh nụ cười;
+   không xoay cả khung LYN trong lúc nháy. */
+#khung-mat.wish-clover.wish-luck.question-one-eye {
+  animation: none !important;
+}
+
+/* ===== question-only-native-eye-wink-fix ===== */
+
+#khung-mat.question-one-eye {animation:none!important;transform:translateY(-1vh) scale(.96)!important;}
+#khung-mat.question-one-eye .truc-x .con-mat {animation:none!important;transform-origin:50% 50%;}
+#khung-mat.question-one-eye .truc-x .mat-cong {animation:none!important;}
+
+/* ===== lyn-question-absolute-angle-blink-fix ===== */
+
+/* Chỉ cảnh câu hỏi: loại bỏ xoay 14deg từ mọi CSS/animation cũ. */
+#khung-mat.question-one-eye,
+#khung-mat.wish-clover.wish-luck.question-one-eye {
+  animation: none !important;
+  transform: translateY(-1vh) rotate(0deg) scale(.96) !important;
+}
+#khung-mat.question-one-eye .truc-x { animation: none !important; }
+#khung-mat.question-one-eye .truc-x .con-mat { animation: none !important; }
+/* Cho nét cong gốc xuất hiện đúng lúc khép mắt phải. */
+#khung-mat.question-one-eye .truc-x:last-child > .mat-cong {
+  visibility: visible !important;
+}
+
+/* ===== question-wink-visible-closed-line-fix ===== */
+
+/* Chỉ cảnh câu hỏi: đường mí mắt gốc vẫn hiển thị lúc hình vuông co lại. */
+#khung-mat.question-one-eye .truc-x:last-child > .mat-cong,
+#khung-mat.wish-clover.wish-luck.question-one-eye .truc-x:last-child > .mat-cong {
+  visibility: visible !important;
+  opacity: var(--question-closed-line-opacity, 0) !important;
+  transition: none !important;
+  overflow: visible !important;
+  z-index: 9 !important;
+  filter: drop-shadow(0 0 7px rgba(0,255,255,.90)) drop-shadow(0 0 15px rgba(69,217,255,.56));
+}
+#khung-mat.question-one-eye .truc-x:last-child > .mat-cong path {
+  fill: none !important;
+  stroke: #9cffff !important;
+  stroke-width: 12px !important;
+  stroke-linecap: round !important;
+  stroke-linejoin: round !important;
+}
+
+/* ===== question-wink-arc-anchored-correction ===== */
+
+/* Cảnh câu hỏi: chỉ hiện nét mí cong trên mắt gốc, không bổ sung hình mắt mới. */
+#khung-mat.question-one-eye .truc-x:last-child > svg.mat-cong {
+  display: block !important;
+  position: absolute !important;
+  left: 0 !important;
+  top: 91px !important;
+  width: 160px !important;
+  height: 70px !important;
+  overflow: visible !important;
+  pointer-events: none !important;
+  z-index: 20 !important;
+  transform-origin: 80px 44px !important;
+  animation: none !important;
+  transition: none !important;
+  filter: drop-shadow(0 0 5px #00ffff) drop-shadow(0 0 11px rgba(0,255,255,.65)) !important;
+}
+#khung-mat.question-one-eye .truc-x:last-child > svg.mat-cong path {
+  fill: none !important;
+  stroke: #9cffff !important;
+  stroke-width: 12px !important;
+  stroke-linecap: round !important;
+  stroke-linejoin: round !important;
+}
+@media (max-width:600px) {
+ #khung-mat.question-one-eye .truc-x:last-child > svg.mat-cong {
+   width: 100px !important;
+   height: 43.75px !important;
+   top: 56.875px !important;
+   transform-origin: 50% 50% !important;
+ }
+}
+
+/* ===== lyn-extra-wishes-design ===== */
+
+/* Các hiệu ứng tham khảo ý tưởng từ tsParticles (hạt), SVG tim, hoa nở;
+   tự viết CSS/SVG để HTML hoạt động hoàn toàn ngoại tuyến. */
+#lyn-wish-decor {position:fixed;inset:0;z-index:6;pointer-events:none;overflow:hidden;isolation:isolate;}
+.lyn-decor-mode {position:absolute;inset:0;opacity:0;visibility:hidden;transition:opacity 1.35s ease,visibility 1.35s;}
+.lyn-decor-mode.is-visible {opacity:1;visibility:visible;}
+.lyn-decor-mode:not(.is-visible) *, .lyn-decor-mode:not(.is-visible) *::before, .lyn-decor-mode:not(.is-visible) *::after {animation-play-state:paused!important;}
+/* 'Nên là tớ muốn' — sao kết nối như sợi chỉ điều ước, đặt xa chữ và LYN. */
+.lyn-decor-want {background:radial-gradient(ellipse 35% 35% at 12% 74%,rgba(107,191,255,.10),transparent 85%),radial-gradient(ellipse 32% 36% at 89% 36%,rgba(231,148,240,.09),transparent 85%);}
+.lyn-wish-constellation {position:absolute;width:clamp(150px,24vw,340px);height:auto;fill:none;opacity:.72;filter:drop-shadow(0 0 8px rgba(177,232,255,.26));}
+.lyn-wish-constellation path {stroke:rgba(150,223,255,.52);stroke-width:1.2;stroke-dasharray:3 9;animation:lynWishDashes 19s linear infinite;}
+.lyn-wish-constellation circle {fill:#e2faff;filter:drop-shadow(0 0 4px #7fdcff);animation:lynConstTwinkle 3.4s ease-in-out infinite alternate;}
+.lyn-wish-constellation.a {left:2%;top:24%;transform:rotate(-11deg);}
+.lyn-wish-constellation.b {right:2%;bottom:11%;transform:scaleX(-1) rotate(14deg);animation:lynWishFloat 9s ease-in-out infinite alternate;}
+@keyframes lynWishDashes {to{stroke-dashoffset:-150;}}
+@keyframes lynConstTwinkle {from{opacity:.26}to{opacity:1}}
+@keyframes lynWishFloat {to{translate:0 -14px;}}
+.lyn-wish-orbit {position:absolute;border:1px solid rgba(153,222,253,.19);border-radius:50%;width:clamp(180px,29vw,470px);aspect-ratio:1;left:-11%;bottom:-26%;box-shadow:0 0 27px rgba(95,174,236,.09);animation:lynWishOrbit 17s linear infinite;}
+.lyn-wish-orbit::after {content:'✧';position:absolute;right:16%;top:9%;font-size:27px;color:#d0fbff;text-shadow:0 0 15px #74ccff;}
+@keyframes lynWishOrbit {to{rotate:360deg}}
+.lyn-wish-orbit.second {left:auto;bottom:auto;right:-13%;top:-32%;width:clamp(200px,32vw,530px);animation-duration:25s;animation-direction:reverse;border-color:rgba(255,188,234,.13);}
+/* 'Sức khỏe' — nhịp tim mềm, ECG nét mảnh và hạt sáng nhỏ. */
+.lyn-decor-health {background:radial-gradient(ellipse 32% 50% at 10% 65%,rgba(255,118,148,.075),transparent 85%),radial-gradient(ellipse 35% 40% at 90% 78%,rgba(255,185,152,.075),transparent 85%);}
+.lyn-health-heart {position:absolute;width:clamp(110px,14vw,190px);left:6%;bottom:20%;aspect-ratio:1;display:grid;place-items:center;opacity:.75;filter:drop-shadow(0 0 15px rgba(255,108,149,.35));}
+.lyn-health-heart::before,.lyn-health-heart::after {content:'';position:absolute;inset:5%;border:1px solid rgba(255,155,188,.30);border-radius:50%;animation:lynHeartAura 3.5s ease-out infinite;}
+.lyn-health-heart::after{animation-delay:1.75s;}
+.lyn-health-heart svg{width:51%;fill:rgba(255,142,172,.17);stroke:#ffa4bd;stroke-width:3.2;animation:lynHeartBeat 1.55s ease-in-out infinite;}
+@keyframes lynHeartAura {0%{opacity:.75;scale:.6}100%{opacity:0;scale:1.55}}
+@keyframes lynHeartBeat {0%,43%,100%{scale:.95}7%,21%{scale:1.08}14%{scale:.98}}
+.lyn-health-ecg{position:absolute;left:3%;bottom:10%;width:43vw;max-width:530px;height:90px;opacity:.78;filter:drop-shadow(0 0 7px rgba(255,133,160,.45));}
+.lyn-health-ecg path {fill:none;stroke:rgba(255,180,204,.85);stroke-width:2.3;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:540;stroke-dashoffset:540;animation:lynECG 4.1s ease-in-out infinite;}
+@keyframes lynECG {0%{stroke-dashoffset:540;opacity:.12}18%{opacity:.85}62%{stroke-dashoffset:0;opacity:.82}100%{stroke-dashoffset:-540;opacity:0}}
+.lyn-health-speck {position:absolute;left:var(--hx);top:var(--hy);width:var(--hs);height:var(--hs);background:#ffd1e0;border-radius:50%;opacity:0;box-shadow:0 0 10px #ffb0d0;animation:lynHealthDust var(--hd) ease-in-out var(--hdelay) infinite;}
+@keyframes lynHealthDust {0%,100%{opacity:0;translate:0 18px;scale:.7}40%{opacity:.8}75%{opacity:.3;translate:9px -19px;scale:1.4}}
+/* 'Xinh đẹp' — cánh hoa rơi và những viên pha lê lấp lánh bên rìa. */
+.lyn-decor-beauty {background:radial-gradient(ellipse 30% 45% at 5% 52%,rgba(255,143,211,.08),transparent),radial-gradient(ellipse 31% 42% at 95% 55%,rgba(172,166,250,.09),transparent);}
+.lyn-beauty-petal {position:absolute;left:var(--px);top:-15%;font-size:var(--ps);line-height:1;color:var(--pc);opacity:0;text-shadow:0 0 10px rgba(255,172,220,.5);animation:lynPetalFall var(--pd) linear var(--delay) infinite;filter:drop-shadow(0 0 6px rgba(255,184,224,.4));}
+@keyframes lynPetalFall {0%{opacity:0;transform:translate(0,0) rotate(-28deg) scale(.75)}14%{opacity:.8}80%{opacity:.58}100%{opacity:0;transform:translate(var(--drift),116vh) rotate(385deg) scale(1.15)}}
+.lyn-beauty-glint {position:absolute;left:var(--gx);top:var(--gy);font-size:var(--gs);color:#f7e6ff;text-shadow:0 0 9px #ffd7f1,0 0 25px rgba(198,181,255,.75);opacity:0;animation:lynBeautyGlimmer var(--gd) ease-in-out var(--gdelay) infinite alternate;}
+@keyframes lynBeautyGlimmer {from{opacity:.09;transform:scale(.55) rotate(-20deg)}to{opacity:.85;transform:scale(1.2) rotate(20deg)}}
+.lyn-beauty-garland{position:absolute;left:50%;bottom:-20%;width:62vw;max-width:890px;height:35vh;transform:translateX(-50%);border-top:1px solid rgba(255,190,234,.19);border-radius:50%;box-shadow:0 -25px 36px rgba(243,134,221,.08);animation:lynBeautyGarland 7s ease-in-out infinite alternate;}
+@keyframes lynBeautyGarland {to{transform:translateX(-50%) translateY(-10px) scaleX(1.07)}}
+@media(max-width:700px){
+ .lyn-wish-constellation{width:38vw;opacity:.65}.lyn-wish-constellation.a{left:-9%;top:30%}.lyn-wish-constellation.b{right:-13%;bottom:21%}
+ .lyn-wish-orbit{width:65vw;left:-35%;bottom:-12%}.lyn-wish-orbit.second{right:-36%;top:-13%;width:70vw}
+ .lyn-health-heart{left:2%;bottom:24%;width:105px;opacity:.6}
+ .lyn-health-ecg{left:3%;bottom:10%;width:63%;height:70px;opacity:.56}
+ .lyn-health-speck:nth-child(n+11){display:none}
+ .lyn-beauty-petal:nth-child(n+10){display:none}
+ .lyn-beauty-garland{width:115vw;height:24vh;bottom:-8%}
+}
+@media(prefers-reduced-motion:reduce){#lyn-wish-decor * {animation:none!important}}
+/* Đổi lời nhờ thành lời cảm ơn bằng crossfade: không thay HTML đột ngột. */
+#share-flight-scene .share-heading-crossfade {
+  display:grid;grid-template-columns:minmax(0,1fr);align-items:center;justify-items:center;
+  width:min(100%,1000px);min-height:2.7em;position:relative;isolation:isolate;
+}
+#share-flight-scene .share-heading-crossfade > span {
+  grid-area:1/1;display:block;width:100%;text-align:center;
+  backface-visibility:hidden;will-change:opacity,transform,filter;
+  transition:opacity .74s cubic-bezier(.2,.7,.3,1),
+             transform .95s cubic-bezier(.16,.72,.2,1),
+             filter .74s ease;
+}
+#share-flight-scene .share-heading-original {opacity:1;transform:translateY(0) scale(1);filter:blur(0);}
+#share-flight-scene .share-heading-thanks {
+  opacity:0;transform:translateY(15px) scale(.94);filter:blur(7px);
+  color:#ffddf3;text-shadow:0 0 15px rgba(255,198,229,.65),0 0 34px rgba(255,135,200,.28);
+  pointer-events:none;
+}
+#share-flight-scene.share-thank-you .share-heading-original {
+  opacity:0;transform:translateY(-14px) scale(.96);filter:blur(7px);
+}
+#share-flight-scene.share-thank-you .share-heading-thanks {
+  opacity:1;transform:translateY(0) scale(1);filter:blur(0);
+  transition-delay:.25s;
+}
+/* Mắt giữ dáng vuông nguyên bản, rồi mềm/phồng nhẹ từng cạnh; lấp lánh nằm trong mắt. */
+#share-lyn.share-lyn-thank-glow #khung-mat .truc-x {
+  transform:translateY(-3px) scale(1.025)!important;
+}
+#share-lyn #khung-mat .lyn-morph-svg .lyn-morph-sparkles {
+  opacity:0;animation:lynThankGlintIn .82s ease .42s forwards;
+}
+#share-lyn #khung-mat .lyn-morph-svg .lyn-morph-sparkles ellipse,
+#share-lyn #khung-mat .lyn-morph-svg .lyn-morph-sparkles circle {
+  fill:#fff!important;stroke:none!important;
+  filter:drop-shadow(0 0 4px rgba(255,255,255,.86));
+}
+#share-lyn.share-lyn-thank-glow #khung-mat .lyn-morph-svg .lyn-morph-sparkles {filter:drop-shadow(0 0 7px rgba(255,255,255,.83));}
+#share-lyn #khung-mat .lyn-morph-svg .lyn-morph-sparkles .lyn-spark-main {
+  animation:lynThankSparkPulse 2.7s ease-in-out 1.15s infinite alternate;
+  transform-box:fill-box;transform-origin:center;
+}
+#share-lyn #khung-mat .lyn-morph-svg .lyn-morph-sparkles .lyn-spark-small {
+  animation:lynThankSparkPulse 3.2s ease-in-out 1.5s infinite alternate-reverse;
+  transform-box:fill-box;transform-origin:center;
+}
+@keyframes lynThankGlintIn {from{opacity:0}to{opacity:1}}
+@keyframes lynThankSparkPulse {from{opacity:.65;transform:scale(.82)}to{opacity:1;transform:scale(1.1)}}
+@media (prefers-reduced-motion:reduce) {
+  #share-flight-scene .share-heading-crossfade > span {transition-duration:.12s!important;transition-delay:0s!important;}
+  #share-lyn #khung-mat .lyn-morph-sparkles, #share-lyn #khung-mat .lyn-morph-sparkles * {animation:none!important;opacity:1!important;}
+}
+
+/* ===== lyn-effects-enhancement-v2 ===== */
+
+/* SVG/Canvas trang trí tối ưu từ các kỹ thuật open-source Anime.js/tsParticles/Canvas Confetti.
+   Mã vẽ riêng, không import CDN; hiệu ứng chỉ chạy khi cảnh thực sự hiển thị. */
+#lyn-wish-decor .lyn-upgrade-motif {position:absolute;inset:0;pointer-events:none;z-index:1;overflow:hidden}
+#lyn-wish-decor .lyn-upgrade-motif svg{position:absolute;width:clamp(150px,20vw,270px);height:auto;overflow:visible;filter:drop-shadow(0 0 9px currentColor);}
+.lyn-upgrade-motif .motif-left {left:0;top:17%;}
+.lyn-upgrade-motif .motif-right {right:0;bottom:11%;transform:scaleX(-1)}
+.lyn-upgrade-motif svg path,.lyn-upgrade-motif svg circle,.lyn-upgrade-motif svg ellipse {fill:none;stroke:currentColor;stroke-width:1.25;stroke-linecap:round;stroke-linejoin:round}
+/* Ước muốn: dải lụa sao được viết nét, hạt sao chạy trên đoạn cong. */
+.lyn-want-upgrade {color:rgba(148,232,255,.63)}
+.lyn-want-upgrade svg path.wish-trace {stroke-dasharray:400;stroke-dashoffset:400;animation:lynUpgradeTrace 5s cubic-bezier(.2,.7,.25,1) .15s forwards;}
+.lyn-want-upgrade svg path.wish-guide{opacity:.17;stroke-dasharray:3 11;animation:lynUpgradeDash 15s linear infinite;}
+.lyn-want-upgrade .lyn-wish-jewel {position:absolute;width:7px;height:7px;border-radius:50%;background:#dbffff;box-shadow:0 0 8px 2px #6bd6ff,0 0 28px #a5f2ff;opacity:.65;animation:lynUpgradeWander var(--dur,8s) ease-in-out var(--delay,0s) infinite alternate;}
+.lyn-want-upgrade .lyn-wish-jewel.one{left:9%;top:24%;--dur:7s}
+.lyn-want-upgrade .lyn-wish-jewel.two{right:12%;bottom:22%;--dur:9s;--delay:-3s;background:#ffe3ff;box-shadow:0 0 9px #ffa3ec}
+@keyframes lynUpgradeTrace {75%,100%{stroke-dashoffset:0}}
+@keyframes lynUpgradeDash {to{stroke-dashoffset:-160}}
+@keyframes lynUpgradeWander{from{transform:translateY(-8px) scale(.75);opacity:.3}to{transform:translate(14px,17px) scale(1.22);opacity:.8}}
+/* Sức khỏe: dấu cộng chữa lành, vòng sóng ngọc/hồng; không chiếm không gian trung tâm. */
+.lyn-health-upgrade{color:rgba(255,180,207,.65)}
+.lyn-heal-sigil {position:absolute;width:clamp(90px,12vw,170px);aspect-ratio:1;border:1px solid rgba(255,193,214,.32);border-radius:50%;display:grid;place-items:center;box-shadow:0 0 27px rgba(255,166,206,.12),inset 0 0 20px rgba(255,169,213,.07);animation:lynHealBreath 3.4s ease-in-out infinite;}
+.lyn-heal-sigil::before,.lyn-heal-sigil::after{content:'';position:absolute;inset:-13%;border-radius:50%;border:1px solid rgba(255,195,210,.24);animation:lynHealHalo 4.2s ease-out infinite;}
+.lyn-heal-sigil::after{animation-delay:2.1s}
+.lyn-heal-sigil.one{right:7%;top:20%;transform:rotate(15deg)}
+.lyn-heal-sigil.two{right:19%;bottom:13%;width:clamp(55px,8vw,104px);opacity:.6;animation-delay:-1.5s;}
+.lyn-heal-sigil svg{position:static!important;width:43%!important;height:43%!important;color:#ffe0e9;filter:drop-shadow(0 0 9px rgba(255,168,199,.9))}
+@keyframes lynHealBreath{0%,100%{opacity:.5;scale:.96}50%{opacity:.9;scale:1.035}}
+@keyframes lynHealHalo{0%{opacity:.65;scale:.75}100%{opacity:0;scale:1.38}}
+/* Xinh đẹp: bông hoa pha lê nét mảnh nở/đung đưa theo gió. */
+.lyn-beauty-upgrade {color:rgba(255,196,231,.64)}
+.lyn-orchid-svg{transform-origin:50% 50%;animation:lynOrchidSway 7s ease-in-out infinite alternate}
+.lyn-orchid-svg.motif-left{top:12%;left:1%;transform:rotate(-10deg)}
+.lyn-orchid-svg.motif-right{bottom:9%;right:1%;animation-delay:-3s}
+.lyn-orchid-svg path{stroke-dasharray:450;stroke-dashoffset:450;animation:lynUpgradeTrace 3.5s ease-out .3s forwards;}
+.lyn-orchid-svg .orchid-nucleus {fill:rgba(255,236,250,.63);stroke:rgba(255,207,236,.9);filter:drop-shadow(0 0 7px #ffbadd);animation:lynOrchidPulse 2.6s ease-in-out infinite alternate;}
+@keyframes lynOrchidSway{from{rotate:-5deg;translate:0 5px}to{rotate:5deg;translate:0 -15px}}
+@keyframes lynOrchidPulse{from{opacity:.45}to{opacity:1}}
+#lyn-upgrade-canvas{position:absolute;inset:0;z-index:2;width:100%;height:100%;pointer-events:none;display:block;}
+.lyn-decor-mode:not(.is-visible) .lyn-upgrade-motif *{animation-play-state:paused!important;}
+@media(max-width:700px){
+ #lyn-wish-decor .lyn-upgrade-motif svg{width:clamp(98px,29vw,160px);opacity:.65}
+ .lyn-upgrade-motif .motif-left{left:-9%;top:25%}
+ .lyn-upgrade-motif .motif-right{right:-10%;bottom:15%}
+ .lyn-heal-sigil.one{right:-4%;top:27%;width:70px}.lyn-heal-sigil.two{right:4%;bottom:20%;width:45px;opacity:.42}
+ .lyn-want-upgrade .lyn-wish-jewel{width:4px;height:4px}
+}
+@media(prefers-reduced-motion:reduce){
+ #lyn-wish-decor .lyn-upgrade-motif *{animation:none!important}
+ #lyn-wish-decor .lyn-upgrade-motif svg path.wish-trace,
+ #lyn-wish-decor .lyn-orchid-svg path{stroke-dashoffset:0!important}
+}
+/* Khoảnh khắc bấm Đồng ý: một đợt sao nhỏ, không che thông báo hoặc nút. */
+#lyn-joy-burst {position:fixed;inset:0;z-index:94;pointer-events:none;width:100%;height:100%;}
+
+/* ===== lyn-new-landscape-and-fauna ===== */
+
+/* === CUSTOM FINISH: landscape/orbit, fauna, and caret smile === */
+/* The previous decorative health crosses sat on top of the girl illustration. */
+#decor-health .lyn-heal-sigil { display:none !important; }
+#decor-health .lyn-heal-sigil svg { display:none !important; }
+
+/* Scene beauty: dusk meadow under a HORIZON silhouette (not the annotated red line). */
+#decor-beauty { isolation:isolate; }
+#decor-beauty .lyn-meadow-scene {position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;overflow:hidden;}
+#decor-beauty .lyn-meadow-scene .lyn-terrain {fill:url(#lynHillGradient);filter:drop-shadow(0 -6px 14px rgba(215,142,196,.17));}
+#decor-beauty .lyn-meadow-scene .lyn-horizon-rim {fill:none;stroke:rgba(245,172,215,.47);stroke-width:2.4;vector-effect:non-scaling-stroke;filter:drop-shadow(0 0 8px rgba(249,174,219,.38));}
+#decor-beauty .lyn-meadow-scene .lyn-meadow-blossom {filter:drop-shadow(0 0 6px rgba(255,177,225,.3));}
+#decor-beauty .lyn-meadow-scene .lyn-meadow-blossom .stem {fill:none;stroke:#8acaba;stroke-width:2.1;stroke-linecap:round;opacity:.64;}
+#decor-beauty .lyn-meadow-scene .lyn-meadow-blossom .flowerhead {fill:none;stroke:rgba(249,202,238,.76);stroke-width:1.7;}
+#decor-beauty .lyn-meadow-scene .lyn-meadow-blossom .center {fill:#ffe9bd;filter:drop-shadow(0 0 5px #ffd6b3);}
+#decor-beauty .lyn-meadow-scene .lyn-meadow-blossom {transform-box:fill-box;transform-origin:50% 100%;animation:lynMeadowSway var(--wave,5s) ease-in-out var(--delay,0s) infinite alternate;}
+@keyframes lynMeadowSway {0%{rotate:-5deg}100%{rotate:5deg}}
+#decor-beauty .lyn-orbit-star {filter:drop-shadow(0 0 10px #bceaff) drop-shadow(0 0 24px rgba(93,189,255,.92));}
+#decor-beauty .lyn-orbit-star .star-outline {stroke:rgba(244,253,255,.98);stroke-width:3;fill:#e9fbff;stroke-linejoin:round;}
+#decor-beauty .lyn-orbit-star .star-halo {fill:rgba(137,214,255,.31);}
+#decor-beauty .lyn-orbit-trail circle {fill:#a4dcff;filter:drop-shadow(0 0 9px #75d6ff);}
+#decor-beauty .lyn-glow-planet {filter:drop-shadow(0 0 9px #bceeff) drop-shadow(0 0 23px rgba(98,186,255,.83));}
+#decor-beauty .lyn-glow-planet .lyn-planet-sphere {filter:drop-shadow(0 0 3px #c7faff);}
+#decor-beauty .lyn-beauty-firefly {position:absolute;z-index:3;left:var(--x);top:var(--y);width:var(--sz);height:var(--sz);border-radius:50%;opacity:0;background:radial-gradient(circle,#fff5d5 10%,#edc8f1 45%,transparent 85%);box-shadow:0 0 10px 2px rgba(255,228,156,.55),0 0 24px rgba(244,172,218,.26);animation:lynFireflyDrift var(--d) ease-in-out var(--delay) infinite alternate,lynFireflyPulse var(--p) ease-in-out var(--delay) infinite alternate;}
+@keyframes lynFireflyDrift {0%{translate:-9px 4px}50%{translate:12px -13px}100%{translate:-4px -28px}}
+@keyframes lynFireflyPulse {0%{opacity:.11;scale:.56}40%{opacity:.78;scale:1}100%{opacity:.36;scale:.7}}
+
+/* Health scene: graceful sparrows and butterflies, without overlapping the person. */
+#decor-health .lyn-health-fauna {position:absolute;inset:0;overflow:hidden;z-index:2;pointer-events:none;}
+#decor-health .lyn-bird {position:absolute;width:var(--width,66px);height:auto;fill:none;stroke:rgba(189,224,243,.68);stroke-width:2.2;stroke-linecap:round;filter:drop-shadow(0 0 7px rgba(138,213,255,.35));animation:lynBirdDrift var(--fly,7s) ease-in-out var(--delay,0s) infinite alternate;}
+#decor-health .lyn-bird .left-wing,#decor-health .lyn-bird .right-wing {transform-origin:50% 50%;animation:lynWings .93s ease-in-out infinite alternate;}
+#decor-health .lyn-bird .right-wing {animation-delay:-.45s}
+@keyframes lynBirdDrift {from{translate:-15px 11px;rotate:-6deg;opacity:.38}to{translate:29px -23px;rotate:6deg;opacity:.9}}
+@keyframes lynWings {from{scale:1 .74}to{scale:1 1.15}}
+#decor-health .lyn-health-butterfly {position:absolute;width:var(--width,54px);height:auto;filter:drop-shadow(0 0 9px rgba(250,177,220,.39));animation:lynButterflyFlight var(--fly,7s) ease-in-out var(--delay,0s) infinite alternate;}
+#decor-health .lyn-health-butterfly .left-wing {transform-box:fill-box;transform-origin:100% 50%;animation:lynButterWingL .82s ease-in-out infinite alternate;}
+#decor-health .lyn-health-butterfly .right-wing {transform-box:fill-box;transform-origin:0% 50%;animation:lynButterWingR .82s ease-in-out infinite alternate;}
+#decor-health .lyn-health-butterfly path {stroke:rgba(255,211,234,.87);stroke-width:1.6;fill:rgba(255,155,213,.14);}
+#decor-health .lyn-health-butterfly .wing-body {stroke:#d8cfff;stroke-width:2.3;fill:none;}
+@keyframes lynButterWingL {0%,100%{scale:.43 1}55%{scale:1 1}}
+@keyframes lynButterWingR {0%,100%{scale:.43 1}55%{scale:1 1}}
+@keyframes lynButterflyFlight {from{translate:-13px 11px;rotate:-9deg}to{translate:23px -26px;rotate:11deg}}
+
+/* Restore the classic happy ^^ pose DURING the thank-you scene, after the
+   cyan eyes have had time to bulge and glint first. */
+#share-lyn .lyn-restored-caret {position:absolute;inset:0;width:100%;height:100%;overflow:visible;z-index:30;pointer-events:none;opacity:0;transition:opacity .32s ease;filter:drop-shadow(0 0 5px #a4ffff) drop-shadow(0 0 13px #12f5ff)}
+#share-lyn .lyn-restored-caret path {fill:none;stroke:#9cffff;stroke-linecap:round;stroke-linejoin:round;stroke-width:12;stroke-dasharray:150;stroke-dashoffset:150;}
+#share-lyn.lyn-caret-restored #khung-mat .lyn-morph-svg {opacity:0!important;transition:opacity .22s ease!important;}
+#share-lyn.lyn-caret-restored #khung-mat .lyn-restored-caret {opacity:1!important;}
+#share-lyn.lyn-caret-restored #khung-mat .lyn-restored-caret path {animation:lynCaretDraw .55s ease-out forwards;}
+@keyframes lynCaretDraw {to{stroke-dashoffset:0}}
+@media(max-width:700px){
+ #decor-health .lyn-bird{width:calc(var(--width,66px)*.67)}
+ #decor-health .lyn-health-butterfly{width:calc(var(--width,54px)*.69)}
+ #decor-beauty .lyn-meadow-scene .lyn-horizon-rim{stroke-width:1.5}
+ #decor-beauty .lyn-meadow-blossom:nth-child(2n){opacity:.7}
+}
+@media(prefers-reduced-motion:reduce){
+ #decor-beauty .lyn-beauty-firefly,#decor-beauty .lyn-meadow-blossom,
+ #decor-health .lyn-bird,#decor-health .lyn-health-butterfly,
+ #decor-health .lyn-bird *,#decor-health .lyn-health-butterfly * {animation:none!important;}
+ #share-lyn.lyn-caret-restored #khung-mat .lyn-restored-caret path {stroke-dashoffset:0!important;animation:none!important;}
+}
+
+/* Cảnh máy bay tuyệt đối không có các đốm long lanh: chỉ mắt thường -> ^^. */
+#share-lyn #khung-mat .lyn-morph-sparkles,
+#share-lyn #khung-mat .reality-one-piece-reflections {display:none!important;}
+#share-lyn.lyn-caret-restored #khung-mat .con-mat {
+  background:transparent!important;
+  box-shadow:none!important;
+  border-color:transparent!important;
+  overflow:visible!important;
+}
+#share-lyn.lyn-caret-restored #khung-mat .lyn-restored-caret {
+  opacity:1!important;
+  display:block!important;
+  visibility:visible!important;
+}
+
+/* Moon: wider disc, gentle diffused blue-silver moonlight instead of icy planet/neon rings. */
+#decor-beauty .lyn-orbit-star.lyn-moon {filter:drop-shadow(0 0 11px rgba(240,248,255,.56)) drop-shadow(0 0 27px rgba(169,201,234,.27));}
+#decor-beauty .lyn-orbit-star.lyn-moon .lyn-planet-sphere {filter:drop-shadow(0 0 6px rgba(238,250,255,.36));}
+#decor-beauty .lyn-orbit-trail circle {opacity:.27;filter:drop-shadow(0 0 5px rgba(177,204,243,.27));fill:#bdcfdf;}
+
+/* ===== lyn-want-crystal-20261014 ===== */
+
+/* Viên pha lê điều ước: lấy cảm hứng từ gradient Auroral và quỹ đạo SVG.
+   Chỉ tồn tại trong #decor-want, không làm thay đổi logic/chuyển động của LYN. */
+#decor-want .lyn-want-aurora {
+  position:absolute;inset:auto -16% -27% -16%;height:62%;pointer-events:none;
+  background:
+   radial-gradient(ellipse 42% 54% at 28% 68%,rgba(34,157,210,.19),transparent 85%),
+   radial-gradient(ellipse 49% 52% at 72% 63%,rgba(115,83,210,.16),transparent 85%),
+   radial-gradient(ellipse 24% 53% at 48% 70%,rgba(89,227,245,.10),transparent 90%);
+  filter:blur(28px);opacity:.7;transform-origin:50% 85%;
+  animation:lynWantAuroraDrift 13s ease-in-out infinite alternate;
+}
+@keyframes lynWantAuroraDrift {
+  0%{opacity:.35;transform:translateX(-2.5%) scaleX(.94) skewX(-5deg)}
+  100%{opacity:.75;transform:translateX(2.5%) scaleX(1.08) skewX(5deg)}
+}
+#decor-want .lyn-want-ribbons {
+  position:absolute;left:50%;bottom:0;transform:translateX(-50%);
+  width:min(1100px,100vw);height:32%;overflow:visible;opacity:.55;pointer-events:none;
+}
+#decor-want .lyn-want-ribbons path{
+  fill:none;stroke-linecap:round;stroke-width:1.3;
+  stroke-dasharray:1000;stroke-dashoffset:1000;
+  animation:lynWantRibbonDraw 7.2s cubic-bezier(.35,.65,.35,1) .3s forwards;
+}
+#decor-want .lyn-want-ribbons .r1{stroke:rgba(123,228,255,.5)}
+#decor-want .lyn-want-ribbons .r2{stroke:rgba(201,168,255,.45);animation-delay:.85s}
+#decor-want .lyn-want-ribbons .r3{stroke:rgba(227,246,255,.28);stroke-width:.75;animation-delay:1.1s}
+@keyframes lynWantRibbonDraw {to{stroke-dashoffset:0}}
+#decor-want .lyn-want-oracle {
+  position:absolute;left:50%;top:79%;width:clamp(155px,18vw,230px);aspect-ratio:1;
+  transform:translate(-50%,-50%);pointer-events:none;z-index:3;
+  filter:drop-shadow(0 0 15px rgba(83,208,255,.35));
+}
+#decor-want .lyn-want-oracle::before{
+  content:"";position:absolute;inset:6%;border-radius:50%;
+  background:radial-gradient(circle,rgba(114,215,255,.19) 0,rgba(66,148,234,.09) 29%,transparent 67%);
+  filter:blur(8px);animation:lynWantHalo 4.4s ease-in-out infinite alternate;
+}
+@keyframes lynWantHalo {from{opacity:.48;scale:.83}to{opacity:.95;scale:1.25}}
+#decor-want .lyn-want-oracle .oracle-main {
+ position:absolute;inset:0;width:100%;height:100%;overflow:visible;
+ animation:lynWantFloat 5.5s ease-in-out infinite alternate;
+}
+@keyframes lynWantFloat {from{transform:translateY(6px) rotate(-3deg)}to{transform:translateY(-9px) rotate(3deg)}}
+#decor-want .oracle-main .oracle-outer {
+  fill:rgba(8,26,61,.42);stroke:rgba(157,244,255,.43);stroke-width:1.7;
+  filter:drop-shadow(0 0 4px rgba(118,226,255,.45));
+}
+#decor-want .oracle-main .oracle-glass {fill:url(#lynOracleGlass);stroke:#ccffff;stroke-width:1.5;stroke-opacity:.8}
+#decor-want .oracle-main .oracle-light {fill:url(#lynOracleLight);filter:drop-shadow(0 0 9px rgba(163,244,255,.9));animation:lynWantCorePulse 3.1s ease-in-out infinite alternate;transform-origin:50% 50%;}
+@keyframes lynWantCorePulse {from{opacity:.64;transform:scale(.88)}to{opacity:1;transform:scale(1.09)}}
+#decor-want .oracle-main .oracle-orbit-one,
+#decor-want .oracle-main .oracle-orbit-two {
+ fill:none;stroke-width:1.1;transform-origin:110px 110px;
+}
+#decor-want .oracle-main .oracle-orbit-one {stroke:rgba(148,228,255,.5);animation:lynWantOrbitOne 16s linear infinite}
+#decor-want .oracle-main .oracle-orbit-two {stroke:rgba(245,198,255,.4);animation:lynWantOrbitTwo 19s linear infinite reverse}
+@keyframes lynWantOrbitOne {from{transform:rotate(-19deg)}to{transform:rotate(341deg)}}
+@keyframes lynWantOrbitTwo {from{transform:rotate(45deg)}to{transform:rotate(405deg)}}
+#decor-want .oracle-main .oracle-orbital-spark {
+ fill:#eeffff;filter:drop-shadow(0 0 7px #87deff);animation:lynWantOrbitalShine 2.7s ease-in-out infinite alternate;
+}
+@keyframes lynWantOrbitalShine {from{opacity:.32}to{opacity:1}}
+#decor-want .lyn-want-mini {
+ position:absolute;width:7px;height:7px;border-radius:50%;background:#e7ffff;
+ box-shadow:0 0 9px #a3eaff,0 0 18px rgba(119,196,255,.65);
+ opacity:.76;animation:lynWantMiniFloat var(--tm,4s) ease-in-out var(--td,0s) infinite alternate;
+}
+#decor-want .lyn-want-mini.a{left:calc(50% - 158px);top:74%;--tm:4.5s}
+#decor-want .lyn-want-mini.b{left:calc(50% + 146px);top:82%;--tm:3.8s;--td:-1.7s;background:#f4ceff;box-shadow:0 0 9px #e6a6ff}
+#decor-want .lyn-want-mini.c{left:calc(50% + 98px);top:66%;width:4px;height:4px;--tm:5.6s;--td:-2.9s}
+@keyframes lynWantMiniFloat{from{opacity:.2;transform:translateY(10px) scale(.7)}to{opacity:.9;transform:translateY(-18px) scale(1.25)}}
+@media(max-width:700px){
+  #decor-want .lyn-want-oracle{top:78%;width:clamp(104px,31vw,151px)}
+  #decor-want .lyn-want-ribbons{height:26%;opacity:.3}
+  #decor-want .lyn-want-aurora{height:52%;opacity:.48;filter:blur(22px)}
+  #decor-want .lyn-want-mini.a{left:calc(50% - 91px);top:75%}
+  #decor-want .lyn-want-mini.b{left:calc(50% + 88px);top:80%}
+  #decor-want .lyn-want-mini.c{left:calc(50% + 75px);top:67%}
+}
+@media(max-height:540px) and (orientation:landscape){
+  #decor-want .lyn-want-oracle{left:81%;top:72%;width:clamp(94px,13vw,145px)}
+  #decor-want .lyn-want-ribbons{opacity:.22}
+  #decor-want .lyn-want-mini{display:none}
+}
+@media(prefers-reduced-motion:reduce){
+ #decor-want .lyn-want-oracle *,#decor-want .lyn-want-ribbons *,
+ #decor-want .lyn-want-aurora,#decor-want .lyn-want-mini {animation:none!important;}
+ #decor-want .lyn-want-ribbons path{stroke-dashoffset:0!important}
+}
+
+/* Đồng ý: một hình SVG liên tục từ mắt vuông -> nét ngang -> dấu ^.
+   Không đặt mắt thứ hai lên trên và không dùng bật/tắt opacity để giả chuyển động. */
+#share-lyn.lyn-folding-smile #khung-mat .con-mat {
+  background:transparent!important;
+  border:0!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+  overflow:visible!important;
+  transform:scaleY(1)!important;
+  animation:none!important;
+  opacity:1!important;
+}
+#share-lyn #khung-mat .lyn-folding-smile-svg {
+  position:absolute;inset:0;
+  display:block;width:100%;height:100%;
+  overflow:visible;pointer-events:none;
+  filter:drop-shadow(0 0 8px rgba(0,255,255,.92)) drop-shadow(0 0 15px rgba(0,231,255,.5));
+}
+#share-lyn #khung-mat .lyn-folding-smile-svg .smile-morph-fill {
+  stroke:#bfffff;stroke-width:1.15;stroke-linejoin:round;
+}
+
+/* ===== lyn-performance-css ===== */
+
+/* ===== LYN performance layer: background rendering only ===== */
+/* Hidden scenes do not keep running dozens of offscreen CSS keyframes. */
+#lyn-shop-scene:not(.shop-visible) *,
+#lyn-reality-scene:not(.reality-visible) *,
+#share-flight-scene:not(.share-visible) *,
+#smile-stage:not(.hien-thi) .lyn-vinyl-scene *,
+#decor-want:not(.is-visible) *,
+#decor-health:not(.is-visible) *,
+#decor-beauty:not(.is-visible) * {
+  animation-play-state:paused !important;
+}
+/* Lower GPU overdraw on touch devices: decorative glow toned down, signature LYN eyes untouched. */
+.lyn-lite #shop-magical-field .shop-magical-firefly,
+.lyn-lite #shop-magical-field .shop-magical-petal,
+.lyn-lite .lyn-beauty-firefly { filter:none !important; }
+.lyn-lite #shop-product-modal.show { backdrop-filter:blur(3px); -webkit-backdrop-filter:blur(3px); }
+.lyn-lite #lyn-shop-scene .dalabs-aurora,
+.lyn-lite #lyn-shop-scene .dalabs-aura,
+.lyn-lite #lyn-shop-scene .dalabs-aurora-layer {filter:none !important;}
+@media (max-width:700px) {
+ .lyn-lite #shop-magical-field .shop-magical-firefly:nth-child(3n),
+ .lyn-lite #shop-magical-field .shop-magical-petal:nth-child(3n),
+ .lyn-lite #decor-beauty .lyn-beauty-firefly:nth-of-type(3n) {display:none !important;}
+}
+
+/* ===== lyn-mobile-extreme-css ===== */
+
+/* Cấu hình mobile-only; laptop / desktop không có lớp lyn-mobile. */
+.lyn-mobile #lyn-sky .lyn-star:nth-child(n+31),
+.lyn-mobile #lower-stars .lower-star:nth-child(n+13),
+.lyn-mobile #lyn-shop-scene .dalabs-dream-mote:nth-child(n+13),
+.lyn-mobile #lyn-shop-scene .shop-magical-firefly:nth-child(n+11),
+.lyn-mobile #lyn-shop-scene .shop-magical-petal:nth-child(n+16){display:none!important}
+.lyn-mobile #lyn-sky .lyn-star:nth-child(n+13),
+.lyn-mobile #lower-stars .lower-star:nth-child(n+7){animation:none!important;opacity:.6}
+/* Sao vẫn có chiều sâu, bỏ cuộn shadow 3 lớp rất rộng, không giật từng nấc. */
+.lyn-mobile #uiverse-starfield #stars,
+.lyn-mobile #uiverse-starfield #stars2,
+.lyn-mobile #uiverse-starfield #stars3{animation:none!important}
+.lyn-mobile #lyn-shop-scene .dalabs-dream-light{animation:none!important;filter:none!important;opacity:.33}
+.lyn-mobile #lyn-shop-scene .dalabs-dream-neon-border{animation:none!important;opacity:.46}
+.lyn-mobile #lyn-shop-scene .dalabs-dream-stellars path{animation:none!important}
+.lyn-mobile #lyn-shop-scene .dalabs-dream-comets span:nth-child(n+2){display:none!important}
+.lyn-mobile #lyn-shop-scene .dalabs-tiktok{animation:none!important}
+.lyn-mobile #lyn-shop-scene .dalabs-tiktok::before{animation:none!important;display:none}
+.lyn-mobile #lyn-shop-scene .dalabs-aura,
+.lyn-mobile #lyn-shop-scene .dalabs-aurora,
+.lyn-mobile #lyn-shop-scene .dalabs-aurora-layer{filter:none!important}
+.lyn-mobile #shop-product-modal.show{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+.lyn-mobile .reality-haze{animation:none!important;filter:none!important}
+/* Chữ vẫn phát sáng, nhưng không dùng nhiều bóng mờ diện tích lớn trên GPU yếu. */
+.lyn-mobile .text-layer{filter:none!important;text-shadow:0 0 9px rgba(255,255,255,.57),0 0 14px rgba(0,225,255,.2)}
+.lyn-mobile #lyn-shop-scene .shop-heading{text-shadow:0 0 9px rgba(160,226,255,.33)}
+/* Bảo lưu màu cyan và biểu cảm của mắt; chỉ gỡ glow động đắt đỏ ở chi tiết phụ. */
+.lyn-mobile .lyn-upgrade-motif{filter:none!important}
+/* Khi trang bị ẩn, không chạy bất kỳ keyframe trang trí nào. */
+.lyn-page-hidden.lyn-mobile .lyn-star,
+.lyn-page-hidden.lyn-mobile .lower-star,
+.lyn-page-hidden.lyn-mobile #lyn-shop-scene *,
+.lyn-page-hidden.lyn-mobile #lyn-shop-scene *::before,
+.lyn-page-hidden.lyn-mobile #lyn-shop-scene *::after{animation-play-state:paused!important}
+\n
+.lyn-mobile #woman-scene { background-image:url(../assets/images/woman-scene-bg-mobile.webp) !important; }
+/* ===== Mobile Scene Stability v2: chỉ Android/iOS/điện thoại; desktop nguyên bản. ===== */
+.lyn-mobile #clover-stage:not(.hien-thi) *,
+.lyn-mobile #luck-stage:not(.hien-thi) *,
+.lyn-mobile #question-stage:not(.hien-thi) *,
+.lyn-mobile #smile-stage:not(.hien-thi) *,
+.lyn-mobile #luck-front-field:not(.active) * {
+    animation-play-state: paused !important;
+}
+/* Giữ các quầng sáng bằng gradient, không animate filter/blur trên cây SVG. */
+.lyn-mobile #clover-stage .clover-ambient {
+    animation:none !important;
+    filter:none !important;
+}
+.lyn-mobile #clover-stage .clover-sample-glow {
+    animation:none !important;
+    filter:none !important;
+    will-change:transform,opacity;
+}
+.lyn-mobile #clover-stage .clover-sample-plant {
+    animation:none !important;
+    filter:drop-shadow(0 0 12px rgba(83,240,139,.68)) !important;
+}
+.lyn-mobile #clover-stage .clover-sample-leaf,
+.lyn-mobile #clover-stage .clover-sample-sway {
+    animation:none !important;
+}
+.lyn-mobile #clover-stage .clover-firefly {
+    box-shadow:0 0 6px rgba(146,250,151,.35);
+    will-change:auto;
+}
+.lyn-mobile #clover-stage .clover-particle {
+    box-shadow:none;
+}
+.lyn-mobile #wish-backdrop { transition:opacity .55s ease !important; }
+.lyn-mobile #wish-backdrop.clover-give {
+    animation:none !important;
+    background:radial-gradient(ellipse 85vw 67vh at 72% 51%,rgba(151,255,183,.32) 0%,rgba(77,180,113,.11) 50%,transparent 80%) !important;
+}
+/* Giai đoạn may mắn / câu hỏi: bỏ blur trên các lớp lớn bị repaint. */
+.lyn-mobile #luck-stage .luck-top-rays {
+    filter:none !important;
+    mix-blend-mode:normal !important;
+    opacity:.38;
+}
+.lyn-mobile #luck-stage .luck-bg-clover,
+.lyn-mobile #luck-stage .luck-bg-clover .luck-bg-svg {
+    filter:none !important;
+}
+.lyn-mobile #luck-stage .luck-fall-clover {
+    filter:none !important;
+}
+.lyn-mobile #question-stage .question-blue-glow,
+.lyn-mobile #question-stage .question-blue-rays {
+    filter:none !important;
+}
+.lyn-mobile #question-stage .question-blue-rays { opacity:.0; }
+.lyn-mobile #question-stage.active .question-blue-rays { opacity:.46; }
+.lyn-mobile #question-stage .question-blue-glow {
+    transition:opacity .8s ease,transform .8s ease;
+}
+/* Ngừng nội suy background-size/background-position của PNG lớn ở cảnh sức khỏe. */
+.lyn-mobile #woman-scene,
+.lyn-mobile #woman-scene.hien-thi {
+    transition:opacity 1.05s ease !important;
+}
+/* Tránh browser tạo thêm texture 2K từ eye-glow khi đang chuyển cảnh. */
+.lyn-mobile #khung-mat.question-one-eye .con-mat {
+    box-shadow:0 0 13px 5px rgba(0,245,255,.48),inset 0 0 12px rgba(255,255,255,.50);
+}
+
+/* ===== lyn-smooth-transitions-v3 ===== */
+
+/* LYN Smooth Transitions V3 – isolated decorative work, not LYN's eyes or words. */
+.lyn-scene-transition #uiverse-starfield #stars,
+.lyn-scene-transition #uiverse-starfield #stars2,
+.lyn-scene-transition #uiverse-starfield #stars3,
+.lyn-scene-transition .lyn-bird,
+.lyn-scene-transition .lyn-health-butterfly,
+.lyn-scene-transition .lyn-meadow-blossom,
+.lyn-scene-transition .lyn-meadow-butterfly {
+    animation-play-state:paused !important;
+}
+.lyn-mobile .reference-wink-trail.heart-mode,
+.lyn-mobile .reference-wink-trail.star-mode {
+    box-shadow:none !important;
+}
+.lyn-mobile .reference-wink-star.heart-mode,
+.lyn-mobile .reference-wink-star.star-mode {
+    filter:drop-shadow(0 0 7px rgba(255,180,215,.68)) !important;
+}
+/* No CPU/GPU-intensive glow repaint while a full-screen scene is crossfading. */
+.lyn-mobile.lyn-scene-transition #decor-beauty .lyn-orbit-star,
+.lyn-mobile.lyn-scene-transition #decor-beauty .lyn-orbit-trail {
+    animation-play-state:paused !important;
+}
+.lyn-mobile #text-7, .lyn-mobile #text-8,
+.lyn-mobile #text-9, .lyn-mobile #text-12, .lyn-mobile #text-13 {
+    text-shadow:0 0 9px rgba(240,250,255,.72),0 0 15px rgba(135,222,255,.32) !important;
+}
+
+/* Luck/question: preserve primary stars but avoid compositing two extra full-screen shadow layers. */
+.luck-scene #uiverse-starfield #stars2,
+.luck-scene #uiverse-starfield #stars3,
+.question-scene-body #uiverse-starfield #stars2,
+.question-scene-body #uiverse-starfield #stars3 {display:none !important;}
+/* Question doesn't need the huge continuously-moving Uiverse star shadow texture. */
+.question-scene-body #uiverse-starfield #stars,
+.question-scene-body #uiverse-starfield #stars2,
+.question-scene-body #uiverse-starfield #stars3 {animation-play-state:paused !important;}
+.lyn-scene-transition #lyn-shop-scene .shop-magical-star,
+.lyn-scene-transition #lyn-shop-scene .shop-magic-petal,
+.lyn-scene-transition #lyn-shop-scene .shop-aurora {animation-play-state:paused !important;}
+
+/* ===== lyn-mobile-beauty-transition-v4 ===== */
+
+/* V4 – isolate expensive Beauty/Smile/Luck scenery; no desktop changes. */
+.lyn-mobile #decor-beauty #lyn-orbit-star,
+.lyn-mobile #decor-beauty #lyn-orbit-trails,
+.lyn-mobile #decor-beauty .lyn-moon,
+.lyn-mobile #decor-beauty .lyn-orbit-star,
+.lyn-mobile #decor-beauty .lyn-orbit-trail,
+.lyn-mobile #decor-beauty .lyn-glow-planet {display:none!important;animation:none!important;filter:none!important}
+/* The three massive CSS-box-shadow star backgrounds used to overlap SVG floral layers. */
+.lyn-mobile #uiverse-starfield #stars2,
+.lyn-mobile #uiverse-starfield #stars3 {display:none!important}
+/* Faster, GPU-friendly fades; no SVG filter repaint inside the crossfade. */
+.lyn-mobile #lyn-wish-decor .lyn-decor-mode{transition:opacity .44s ease-out,visibility .44s!important}
+.lyn-mobile #beauty-stage{transition:opacity .55s ease-out,visibility .55s!important}
+.lyn-mobile #smile-stage{transition:opacity .57s ease-out,visibility .57s!important}
+.lyn-mobile #wish-backdrop{transition:opacity .55s ease-out!important}
+.lyn-mobile #wish-backdrop.beauty{
+ background:radial-gradient(ellipse 58vw 40vh at 50% 55%,rgba(161,80,169,.13),transparent 91%)!important
+}
+.lyn-mobile #beauty-stage .ring {box-shadow:none!important;transition:opacity .55s ease-out,transform .58s ease-out!important}
+.lyn-mobile #beauty-stage .ring::before,
+.lyn-mobile #beauty-stage .ring::after {text-shadow:none!important;animation:none!important}
+.lyn-mobile #beauty-stage .wish-floral{filter:none!important}
+/* Flower drawings still appear, but do not continuously repaint dozens of animated SVG strokes. */
+.lyn-mobile #beauty-stage .wish-branch {animation:none!important;stroke-dasharray:none!important;stroke-dashoffset:0!important}
+.lyn-mobile #beauty-stage .wish-bloom .petals {animation:none!important;opacity:1!important;transform:none!important}
+.lyn-mobile #beauty-stage .wish-leaf {animation:none!important;opacity:.8!important;transform:none!important}
+.lyn-mobile #beauty-stage .butterfly-wrap.right{display:none!important}
+.lyn-mobile #beauty-stage .butterfly-wrap{filter:none!important}
+.lyn-mobile #beauty-stage .wish-twinkle:nth-of-type(n+8){display:none!important}
+.lyn-mobile #decor-beauty .lyn-meadow-scene .lyn-terrain,
+.lyn-mobile #decor-beauty .lyn-meadow-scene .lyn-horizon-rim,
+.lyn-mobile #decor-beauty .lyn-meadow-scene .lyn-meadow-blossom,
+.lyn-mobile #decor-beauty .lyn-meadow-scene .lyn-meadow-blossom .center {filter:none!important}
+.lyn-mobile #decor-beauty .lyn-meadow-scene .lyn-meadow-blossom {animation:none!important}
+.lyn-mobile #decor-beauty .lyn-beauty-firefly:nth-of-type(n+9){display:none!important}
+.lyn-mobile #decor-beauty .lyn-beauty-firefly {filter:none!important;box-shadow:0 0 5px rgba(255,200,239,.42)!important;animation-duration:9s,6s!important}
+.lyn-mobile #decor-beauty .lyn-orchid-svg,
+.lyn-mobile #decor-beauty .lyn-orchid-svg path {animation:none!important;filter:none!important}
+.lyn-mobile #decor-beauty .lyn-orchid-svg path {stroke-dashoffset:0!important;stroke-dasharray:none!important}
+.lyn-mobile #decor-beauty .lyn-upgrade-motif {filter:none!important}
+.lyn-mobile #smile-stage .waguri-aura,
+.lyn-mobile #smile-stage .waguri-figure {filter:none!important}
+.lyn-mobile #smile-stage .waguri-aura {animation:none!important}
+.lyn-mobile #smile-stage .waguri-figure {transition:opacity .7s ease,transform .75s ease!important}
+.lyn-mobile #smile-stage .warm-halo {animation:none!important}
+/* Hide only peripheral glimmers while the outgoing and incoming scenes overlap. */
+.lyn-mobile.lyn-scene-transition #smile-stage .waguri-glimmer,
+.lyn-mobile.lyn-scene-transition #beauty-stage .wish-twinkle,
+.lyn-mobile.lyn-scene-transition #decor-beauty .lyn-beauty-firefly{animation-play-state:paused!important}
+/* The luck canvas is still faded, but not drawn underneath the new question for an entire second. */
+.lyn-mobile.lyn-luck-exit #luck-front-field canvas,
+.lyn-mobile.lyn-luck-exit #luck-stage canvas{opacity:0!important;transition:opacity .22s ease-out!important}
+.lyn-mobile.lyn-luck-exit #luck-stage .luck-bg-field,
+.lyn-mobile.lyn-luck-exit #luck-stage .luck-top-rays {opacity:0!important;transition:opacity .24s ease-out!important}
+.lyn-mobile #question-stage .question-space-haze {filter:none!important;mix-blend-mode:normal!important;animation:none!important}
+.lyn-mobile #question-stage .question-blue-rays {filter:none!important;animation:none!important}
+.lyn-mobile #question-stage .question-blue-glow {filter:none!important}
+
+/* ===== lyn-beauty-mobile-v5-one-scene ===== */
+
+/* V5: Beauty only, smartphone/tablet only. Desktop and other scenes remain as V4. */
+.lyn-mobile #decor-beauty .lyn-upgrade-motif,
+.lyn-mobile #decor-beauty .lyn-beauty-garland {display:none!important}
+.lyn-mobile #decor-beauty .lyn-decor-beauty {filter:none!important}
+/* Four petals only, one traversal. They are removed from DOM after exiting the view. */
+.lyn-mobile #decor-beauty .lyn-beauty-petal {
+  animation:lynPetalFall var(--lyn-v5-duration,7.5s) linear var(--lyn-v5-delay,0s) 1 both!important;
+  text-shadow:none!important;filter:none!important;
+  will-change:transform,opacity;
+}
+.lyn-mobile #decor-beauty .lyn-beauty-glint {
+  animation:none!important;opacity:.65!important;transform:none!important;
+  text-shadow:0 0 5px rgba(255,210,240,.38)!important;filter:none!important;
+}
+.lyn-mobile #decor-beauty .lyn-beauty-firefly {
+  animation:lynFireflyDrift 8s ease-in-out infinite alternate!important;
+  opacity:.63!important;background:#f7d5f4!important;
+  box-shadow:none!important;filter:none!important;
+}
+/* Meadow: static flowers and horizon, no repeated SVG filtering or sway. */
+.lyn-mobile #decor-beauty .lyn-meadow-scene,
+.lyn-mobile #decor-beauty .lyn-meadow-scene * {
+  filter:none!important;animation:none!important;
+}
+.lyn-mobile #decor-beauty .lyn-meadow-scene .lyn-horizon-rim {opacity:.72}
+/* Two gently drawn side bouquets, one small butterfly and static glimmers. */
+.lyn-mobile #beauty-stage .ring {box-shadow:none!important;will-change:opacity,transform}
+.lyn-mobile #beauty-stage .ring::before,
+.lyn-mobile #beauty-stage .ring::after {animation:none!important;text-shadow:none!important}
+.lyn-mobile #beauty-stage .wish-twinkle {animation:none!important;text-shadow:0 0 5px rgba(255,220,187,.34)!important;opacity:.85!important}
+.lyn-mobile #beauty-stage .butterfly-wrap.left {
+  animation:floatButterfly 6.5s ease-in-out infinite alternate!important;
+  opacity:.80!important;filter:none!important;
+}
+.lyn-mobile #beauty-stage .butterfly-wrap .wing-pair {animation:wingFlap 1.25s ease-in-out infinite alternate!important}
+.lyn-mobile #beauty-stage:not(.hien-thi) *,
+.lyn-mobile #decor-beauty:not(.is-visible) * {animation-play-state:paused!important}
+/* Shorten overdraw without removing the crossfade itself. */
+.lyn-mobile #decor-beauty {transition:opacity .38s ease-out,visibility .38s!important}
+
+/* ===== lyn-v6-mobile-clover-transition ===== */
+
+/* Mobile-only transition budget: keep LYN's own eye, blinking and clover animations intact. */
+.lyn-mobile.lyn-v6-clover-switch #smile-stage .waguri-glimmer,
+.lyn-mobile.lyn-v6-clover-switch #smile-stage .smile-ornament,
+.lyn-mobile.lyn-v6-clover-switch #smile-stage .warm-halo,
+.lyn-mobile.lyn-v6-clover-switch #smile-stage .lyn-vinyl-scene *,
+.lyn-mobile.lyn-v6-clover-switch #decor-beauty * {
+    animation-play-state:paused !important;
+}
+/* The blackout handles the fade. Avoid simultaneously fading three enormous star shadow textures. */
+.lyn-mobile.lyn-v6-clover-switch #uiverse-starfield,
+.lyn-mobile.lyn-v6-clover-switch #lyn-sky,
+.lyn-mobile.lyn-v6-clover-switch #lower-stars,
+.lyn-mobile.lyn-v6-clover-switch #sao-vu-tru,
+.lyn-mobile.lyn-v6-clover-switch #vien-vu-tru {
+    transition:none !important;
+    animation:none !important;
+    opacity:0 !important;
+    visibility:hidden !important;
+}
+/* The leaving scene is painted once, then retired, not composited during the clover glow. */
+.lyn-mobile.lyn-v6-clover-switch #smile-stage .waguri-aura,
+.lyn-mobile.lyn-v6-clover-switch #smile-stage .waguri-figure {filter:none !important;}
+.lyn-mobile.lyn-v6-luck-switch #clover-stage,
+.lyn-mobile.lyn-v6-luck-switch #clover-particle-field,
+.lyn-mobile.lyn-v6-luck-switch #wish-backdrop {
+    transition:none !important;
+    animation:none !important;
+    opacity:0 !important;
+    visibility:hidden !important;
+}
+/* During the first frames of luck, stop residual clover glow; keep luck eyes/text composited normally. */
+.lyn-mobile.lyn-v6-luck-switch #clover-stage *,
+.lyn-mobile.lyn-v6-luck-switch #clover-stage *::before,
+.lyn-mobile.lyn-v6-luck-switch #clover-stage *::after {animation-play-state:paused !important;}
+
+/* ===== lyn-waguri-ios-alpha-fallback ===== */
+
+/* Safari on iPhone/iPad may render VP9 transparency as an opaque tinted rectangle.
+   WebP is independently decoded and contains genuine RGBA frames. */
+#smile-stage .waguri-image-fallback {display:none;pointer-events:none;}
+html.lyn-waguri-image-mode #smile-stage #waguri-smile-video {display:none!important;}
+html.lyn-waguri-image-mode #smile-stage .waguri-image-fallback {display:block;}
+
+/* ===== lyn-waguri-smooth-reveal-v7 ===== */
+
+/* Waguri is revealed only AFTER the video has decoded its first frame. This
+   avoids WebM transparency frames abruptly appearing halfway through a fade. */
+#smile-stage .waguri-figure,
+#smile-stage.hien-thi .waguri-figure {
+    opacity: 0 !important;
+    transform: translate3d(0, 17px, 0) scale(.965) !important;
+    transition: opacity 1.35s ease-in-out, transform 1.35s cubic-bezier(.22,1,.36,1) !important;
+}
+#smile-stage.hien-thi.waguri-frame-visible .waguri-figure {
+    opacity: 1 !important;
+    transform: translate3d(0, 0, 0) scale(1) !important;
+}
+/* Short compositing fade remains when leaving the scene. */
+#smile-stage:not(.hien-thi) .waguri-figure { opacity: 0 !important; }
+@media (max-width: 700px) {
+    .lyn-mobile #smile-stage .waguri-figure,
+    .lyn-mobile #smile-stage.hien-thi .waguri-figure {
+        filter: none !important;
+        transition: opacity 1.45s ease-in-out, transform 1.45s cubic-bezier(.22,1,.36,1) !important;
+    }
+    .lyn-mobile #smile-stage.hien-thi.waguri-frame-visible .waguri-figure { opacity: 1 !important; }
+}
+
+/* ===== lyn-v8-mobile-clover-question (id="lyn-v8-mobile-clover-question" data-performance="mobile-only") ===== */
+
+/* Mobile V8: fewer simultaneous raster surfaces, retain original main animation. */
+.lyn-mobile #clover-stage .clover-ambient {
+  background: radial-gradient(ellipse 60% 54% at 52% 52%,rgba(33,148,70,.13),transparent 78%) !important;
+}
+.lyn-mobile #clover-stage .clover-sample-plant {
+  filter:none !important;
+}
+.lyn-mobile #clover-stage .clover-sample-glow {
+  filter:none !important;
+  opacity:.8;
+}
+.lyn-mobile #clover-stage .clover-firefly,
+.lyn-mobile #clover-stage .clover-particle {
+  filter:none !important;
+  box-shadow:0 0 4px rgba(127,255,164,.25) !important;
+}
+/* Retain the leaf silhouette; avoid a large full-screen SVG shader while the eye morph runs. */
+.lyn-mobile #clover-stage .clover-sample-garden svg,
+.lyn-mobile #clover-stage .clover-sample-plant path {
+  filter:none !important;
+}
+/* GPU-only fade on the retiring scene; do not repaint two animated canvas textures. */
+.lyn-mobile.lyn-v8-question-enter #luck-stage,
+.lyn-mobile.lyn-v8-question-enter #luck-front-field {
+  pointer-events:none !important;
+  will-change:opacity;
+}
+.lyn-mobile.lyn-v8-question-enter #luck-stage .luck-top-rays,
+.lyn-mobile.lyn-v8-question-enter #luck-stage .luck-ambient,
+.lyn-mobile.lyn-v8-question-enter #luck-stage .luck-bg-clover,
+.lyn-mobile.lyn-v8-question-enter #luck-front-field * {
+  animation-play-state:paused !important;
+}
+.lyn-mobile #luck-stage.lyn-v8-fade-luck,
+.lyn-mobile #luck-front-field.lyn-v8-fade-luck {
+  opacity:0 !important;
+  transition:opacity .23s ease-out !important;
+}
+.lyn-mobile #luck-stage.lyn-v8-retired-luck,
+.lyn-mobile #luck-front-field.lyn-v8-retired-luck {
+  display:none !important;
+}
+/* Ensure the question still shows its original eyes, wink line and cyan title. */
+.lyn-mobile.lyn-v8-question-enter #question-stage .question-space-haze {
+  filter:none !important;
+}
+
+/* ===== lyn-v9-mobile-staggered-transitions ===== */
+
+/* V9 — riêng mobile: phần cỏ nền may mắn hiển thị dần thay vì pop. */
+.lyn-mobile #luck-stage {transition:opacity .95s ease-in-out!important;}
+.lyn-mobile #luck-front-field {transition:opacity 1.05s ease-in-out!important;}
+.lyn-mobile #luck-stage .luck-bg-clover {
+    transition:opacity 1.35s ease-out,transform 1.35s ease-out!important;
+    filter:drop-shadow(0 0 7px rgba(96,244,154,.34))!important;
+}
+.lyn-mobile #luck-stage .luck-bg-clover .luck-bg-svg {filter:none!important;}
+/* Fade the luck decorations in, without starting full-screen moving glow on the first frame. */
+.lyn-mobile #luck-stage .luck-top-rays {filter:none!important;opacity:0;transition:opacity 1.4s ease!important;}
+.lyn-mobile #luck-stage.active .luck-top-rays {opacity:.47!important;}
+/* Prevent retired stage and entering stage from fighting for expensive layers. */
+.lyn-mobile.lyn-v9-question-crossfade #question-stage .question-space-haze,
+.lyn-mobile.lyn-v9-question-crossfade #question-stage .question-blue-rays {animation-play-state:paused!important;}
+.lyn-mobile #lyn-shop-scene.lyn-shop-opening .dalabs-footer *,
+.lyn-mobile #lyn-shop-scene.lyn-shop-opening .shop-magical-firefly,
+.lyn-mobile #lyn-shop-scene.lyn-shop-opening .shop-magical-petal,
+.lyn-mobile #lyn-shop-scene.lyn-shop-opening .shop-magic-vines * {animation-play-state:paused!important;}
+.lyn-mobile.lyn-v9-reality-enter #lyn-reality-scene .reality-haze,
+.lyn-mobile.lyn-v9-reality-enter #lyn-reality-scene .reality-portal {filter:none!important;}
+.lyn-mobile #question-stage .question-blue-rays {filter:none!important;}
+.lyn-mobile #question-stage .question-space-haze {filter:none!important;}
+/* Defer rendering large footer until user actually scrolls toward it. */
+.lyn-mobile #lyn-shop-scene .dalabs-footer {content-visibility:auto;contain-intrinsic-size:auto 460px;}
+
+/* ===== lyn-v10-desktop-perf ===== */
+
+
+/* V10 DESKTOP: eliminate animation work in invisible scenes without
+   changing their visible animations. Never target LYN's eye/text layers. */
+html.lyn-desktop-performance #decor-want:not(.is-visible) *,
+html.lyn-desktop-performance #decor-health:not(.is-visible) *,
+html.lyn-desktop-performance #decor-beauty:not(.is-visible) *,
+html.lyn-desktop-performance #beauty-stage:not(.hien-thi) *,
+html.lyn-desktop-performance #smile-stage:not(.hien-thi) *,
+html.lyn-desktop-performance #clover-stage:not(.hien-thi) *,
+html.lyn-desktop-performance #luck-stage:not(.hien-thi) *,
+html.lyn-desktop-performance #question-stage:not(.hien-thi) *,
+html.lyn-desktop-performance #share-flight-scene:not(.share-visible) *,
+html.lyn-desktop-performance #lyn-reality-scene:not(.reality-visible) *,
+html.lyn-desktop-performance #lyn-shop-scene:not(.shop-visible) * {
+  animation-play-state:paused !important;
+}
+/* During crossfades, preserve LYN/word motion but freeze expensive decoration. */
+html.lyn-desktop-performance.lyn-scene-transition #decor-want *,
+html.lyn-desktop-performance.lyn-scene-transition #decor-health *,
+html.lyn-desktop-performance.lyn-scene-transition #decor-beauty *,
+html.lyn-desktop-performance.lyn-scene-transition #uiverse-starfield #stars,
+html.lyn-desktop-performance.lyn-scene-transition #uiverse-starfield #stars2,
+html.lyn-desktop-performance.lyn-scene-transition #uiverse-starfield #stars3,
+html.lyn-desktop-performance.lyn-scene-transition #lyn-shop-scene .shop-magical-petal,
+html.lyn-desktop-performance.lyn-scene-transition #lyn-shop-scene .shop-magical-firefly,
+html.lyn-desktop-performance.lyn-scene-transition #lyn-shop-scene .dalabs-dream-mote {
+ animation-play-state:paused !important;
+}
+/* Make only visible words a compositing candidate, not hundreds of stars. */
+html.lyn-desktop-performance .text-layer.hien-thi {will-change:opacity;}
+html.lyn-desktop-performance .reference-wink-star {will-change:transform,opacity;}
+
+/* ===== lyn-v11-mobile-question-arc-visible ===== */
+
+/* Sửa selector: mắt phải là DIV cuối cùng, KHÔNG phải child cuối vì sau nó còn SVG nụ cười. */
+.lyn-mobile #khung-mat.question-one-eye > .truc-x:last-of-type > svg.mat-cong {
+  display:block !important;
+  visibility:visible !important;
+  width:160px !important;
+  height:70px !important;
+  left:0 !important;
+  top:91px !important;
+  overflow:visible !important;
+  pointer-events:none !important;
+  z-index:20 !important;
+  transform-origin:80px 44px !important;
+  animation:none !important;
+  filter:drop-shadow(0 0 6px rgba(0,255,255,.80)) !important;
+}
+.lyn-mobile #khung-mat.question-one-eye > .truc-x:last-of-type > svg.mat-cong path {
+  opacity:1 !important;
+  fill:none !important;
+  stroke:#9cffff !important;
+  stroke-width:12px !important;
+  stroke-linecap:round !important;
+  stroke-linejoin:round !important;
+}
+@media(max-width:600px){
+  .lyn-mobile #khung-mat.question-one-eye > .truc-x:last-of-type > svg.mat-cong {
+    width:100px !important;
+    height:43.75px !important;
+    top:56.875px !important;
+    transform-origin:50% 50% !important;
+  }
+}
+
+/* ===== lyn-v12-desktop-beauty-fps ===== */
+
+/* V12 PC beauty-scene: retain moon, flowers, butterflies and text;
+   remove redundant per-frame SVG filters and repetitive floral strokes.
+   Mobile uses unchanged V11/V5 CSS because all selectors exclude .lyn-mobile. */
+html.lyn-desktop-performance:not(.lyn-mobile) #decor-beauty .lyn-beauty-firefly {
+  box-shadow:0 0 5px 1px rgba(255,205,239,.36)!important;
+  filter:none!important;
+  will-change:transform,opacity;
+}
+html.lyn-desktop-performance:not(.lyn-mobile) #decor-beauty .lyn-meadow-scene .lyn-terrain,
+html.lyn-desktop-performance:not(.lyn-mobile) #decor-beauty .lyn-meadow-scene .lyn-horizon-rim,
+html.lyn-desktop-performance:not(.lyn-mobile) #decor-beauty .lyn-meadow-scene .lyn-meadow-blossom,
+html.lyn-desktop-performance:not(.lyn-mobile) #decor-beauty .lyn-meadow-scene .lyn-meadow-blossom .center,
+html.lyn-desktop-performance:not(.lyn-mobile) #decor-beauty .lyn-orbit-trail circle,
+html.lyn-desktop-performance:not(.lyn-mobile) #decor-beauty .lyn-orchid-svg,
+html.lyn-desktop-performance:not(.lyn-mobile) #decor-beauty .lyn-orchid-svg path {
+  filter:none!important;
+}
+html.lyn-desktop-performance:not(.lyn-mobile) #decor-beauty .lyn-meadow-scene .lyn-meadow-blossom {
+  animation:none!important;
+}
+/* Floral edges stay drawn, but are revealed by the main scene's opacity fade
+   rather than hundreds of individual SVG stroke animations at entry. */
+html.lyn-desktop-performance:not(.lyn-mobile) #beauty-stage .wish-branch,
+html.lyn-desktop-performance:not(.lyn-mobile) #beauty-stage .wish-leaf,
+html.lyn-desktop-performance:not(.lyn-mobile) #beauty-stage .wish-bloom .petals,
+html.lyn-desktop-performance:not(.lyn-mobile) #decor-beauty .lyn-orchid-svg path {
+  animation:none!important;
+  stroke-dasharray:none!important;
+  stroke-dashoffset:0!important;
+}
+html.lyn-desktop-performance:not(.lyn-mobile) #beauty-stage .wish-leaf {
+  opacity:.82!important;transform:none!important;
+}
+html.lyn-desktop-performance:not(.lyn-mobile) #beauty-stage .wish-bloom .petals {
+  opacity:1!important;transform:none!important;
+}
+html.lyn-desktop-performance:not(.lyn-mobile) #beauty-stage .ring {
+  box-shadow:0 0 16px rgba(230,153,224,.055)!important;
+}
+/* Soft single glow on the moon. Orbit still travels smoothly at native RAF. */
+html.lyn-desktop-performance:not(.lyn-mobile) #decor-beauty .lyn-orbit-star.lyn-moon {
+  filter:drop-shadow(0 0 12px rgba(192,221,248,.58))!important;
+}
+html.lyn-desktop-performance:not(.lyn-mobile) #decor-beauty .lyn-moon .lyn-planet-sphere {
+  filter:none!important;
+}
+html.lyn-desktop-performance:not(.lyn-mobile) #decor-beauty .lyn-beauty-petal {
+  filter:none!important;
+  text-shadow:0 0 4px rgba(255,172,220,.30)!important;
+}
+/* The star field remains visible but stationary while Beauty runs, reducing
+   three huge CSS box-shadow background animations on desktop. */
+html.lyn-pc-beauty-v12 #uiverse-starfield #stars,
+html.lyn-pc-beauty-v12 #uiverse-starfield #stars2,
+html.lyn-pc-beauty-v12 #uiverse-starfield #stars3 {
+  animation-play-state:paused!important;
+}
+
+/* ===== lyn-v13-scene-finishing ===== */
+
+/* Strictly the lyn moon in Beauty: keep the scenery, flowers and rover's moon intact. */
+#decor-beauty #lyn-orbit-star,
+#decor-beauty #lyn-orbit-trails { display: none !important; }
+
+/* One-shot compositor-friendly light pass between Luck and Question. */
+#lyn-question-entry-v13 {
+  position:absolute; inset:0; z-index:4;
+  visibility:hidden; opacity:0; pointer-events:none;
+  contain:layout paint;
+  background:radial-gradient(ellipse 43% 32% at 50% 37%,
+    rgba(134,244,230,.21) 0%, rgba(94,179,250,.15) 39%, transparent 74%);
+}
+#lyn-question-entry-v13.v13-playing {
+  visibility:visible;
+  animation:v13QuestionVeil .85s ease-out both;
+  will-change:opacity;
+}
+#lyn-question-entry-v13 .v13-light-sweep {
+  position:absolute; left:20%; width:60%; height:2px; top:47%;
+  border-radius:99px;
+  background:linear-gradient(90deg,transparent,rgba(163,250,231,.74) 28%,rgba(141,213,255,.94) 55%,transparent);
+  opacity:0; transform:translate3d(-12%,0,0) scaleX(.55);
+}
+#lyn-question-entry-v13.v13-playing .v13-light-sweep {
+  animation:v13QuestionLine .78s cubic-bezier(.25,.74,.22,1) both;
+  will-change:opacity,transform;
+}
+#lyn-question-entry-v13 .v13-twinkle {
+  position:absolute; display:block; color:#cbf9ff;
+  font-size:clamp(10px,1.35vw,17px); line-height:1;
+  text-shadow:0 0 6px rgba(167,235,255,.58);
+  opacity:0; transform:translate3d(0,9px,0) scale(.6);
+}
+#lyn-question-entry-v13 .v13-twinkle:nth-of-type(1) {left:30%;top:40%;}
+#lyn-question-entry-v13 .v13-twinkle:nth-of-type(2) {left:69%;top:31%;}
+#lyn-question-entry-v13 .v13-twinkle:nth-of-type(3) {left:78%;top:54%;}
+#lyn-question-entry-v13.v13-playing .v13-twinkle {
+  animation:v13QuestionStar .70s ease-out both;
+  will-change:opacity,transform;
+}
+#lyn-question-entry-v13.v13-playing .v13-twinkle:nth-of-type(2){animation-delay:.10s;}
+#lyn-question-entry-v13.v13-playing .v13-twinkle:nth-of-type(3){animation-delay:.19s;}
+@keyframes v13QuestionVeil {0%{opacity:0}28%{opacity:1}65%{opacity:.68}100%{opacity:0}}
+@keyframes v13QuestionLine {
+  0%{opacity:0;transform:translate3d(-12%,0,0) scaleX(.55)}
+  34%{opacity:.78}70%{opacity:.62}
+  100%{opacity:0;transform:translate3d(8%,0,0) scaleX(1.08)}
+}
+@keyframes v13QuestionStar {
+  0%{opacity:0;transform:translate3d(0,9px,0) scale(.6)}
+  42%{opacity:.82;transform:translate3d(0,-2px,0) scale(1.02)}
+  100%{opacity:0;transform:translate3d(0,-12px,0) scale(.88)}
+}
+@media (prefers-reduced-motion:reduce) {
+  #lyn-question-entry-v13.v13-playing,
+  #lyn-question-entry-v13.v13-playing * {animation-duration:.15s!important;}
+}
+
+/* ===== lyn-intro-prompt-v15 ===== */
+
+#khung-mat #lyn-intro-nudge {
+  position:absolute;left:calc(100% + 16px);top:15%;z-index:25;
+  display:flex;align-items:center;gap:8px;white-space:nowrap;
+  padding:9px 12px;border:1px solid rgba(169,248,255,.43);
+  border-radius:17px 17px 17px 5px;
+  background:linear-gradient(135deg,rgba(10,31,53,.91),rgba(35,38,75,.88));
+  color:#e5ffff;font:700 clamp(13px,1.4vw,17px)/1.25 system-ui,sans-serif;
+  text-shadow:0 0 8px rgba(104,246,255,.44);
+  box-shadow:0 0 15px rgba(99,234,255,.13);
+  opacity:0;visibility:hidden;pointer-events:none;
+  transform:translate3d(-8px,6px,0) scale(.94);
+  transition:opacity .38s ease,transform .38s ease,visibility 0s .38s;
+}
+#khung-mat #lyn-intro-nudge.show {
+  opacity:1;visibility:visible;
+  transform:translate3d(0,0,0) scale(1);
+  transition:opacity .38s ease,transform .38s ease,visibility 0s;
+}
+#lyn-intro-nudge .lyn-nudge-arrow {width:19px;height:19px;display:block;color:#8ef8ff;
+  animation:lynPromptArrowV15 1.45s ease-in-out infinite;}
+@keyframes lynPromptArrowV15 {
+  0%,100% {transform:translate3d(0,0,0);opacity:.72}
+  50% {transform:translate3d(6px,0,0);opacity:1}
+}
+#khung-mat.lyn-intro-urging .truc-x {
+  animation:lynPromptEyesV15 2.5s ease-in-out infinite;
+}
+#khung-mat.lyn-intro-urging .ma-hong {opacity:.64;transition:opacity .25s ease}
+@keyframes lynPromptEyesV15 {
+  0%,14%,86%,100% {transform:translate3d(0,0,0) rotate(0deg)}
+  33%,65% {transform:translate3d(9px,-2px,0) rotate(3deg)}
+}
+@media(max-width:700px) {
+  #khung-mat #lyn-intro-nudge {
+    left:50%;top:calc(100% + 21px);
+    padding:8px 11px;gap:7px;border-radius:15px;
+    font-size:14px;
+    transform:translate3d(-50%,6px,0) scale(.95);
+  }
+  #khung-mat #lyn-intro-nudge.show {transform:translate3d(-50%,0,0) scale(1)}
+}
+@media(prefers-reduced-motion:reduce) {
+  #khung-mat.lyn-intro-urging .truc-x,
+  #lyn-intro-nudge .lyn-nudge-arrow {animation:none!important}
+}

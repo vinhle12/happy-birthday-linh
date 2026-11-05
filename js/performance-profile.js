@@ -1,0 +1,32 @@
+
+/* Performance profile: animated background adapts, story timing/audio/product links stay unchanged. */
+window.LYN_PERF = (() => {
+  const qs = new URLSearchParams(location.search);
+  const quality = qs.get('lynfx');
+  const touch = matchMedia('(pointer:coarse)').matches;
+  const constrained = touch || (navigator.deviceMemory && navigator.deviceMemory <= 6)
+     || (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4);
+  const mobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || (touch && matchMedia('(max-width:900px)').matches && !/Windows|Macintosh|X11/i.test(navigator.userAgent));
+  // Safari/WebKit does not reliably preserve the VP9 WebM alpha channel.
+  // A transparent animated WebP fallback is embedded for iOS/iPadOS and Safari.
+  const appleMobile = /iPhone|iPad|iPod/i.test(navigator.userAgent) ||
+      (/Macintosh/i.test(navigator.userAgent) && navigator.maxTouchPoints > 1);
+  const desktopSafari = /Safari/i.test(navigator.userAgent) &&
+      !/Chrome|Chromium|CriOS|FxiOS|Edg|OPR|Android/i.test(navigator.userAgent);
+  window.LYN_WAGURI_USE_IMAGE = appleMobile || desktopSafari;
+  document.documentElement.classList.toggle('lyn-waguri-image-mode', window.LYN_WAGURI_USE_IMAGE);
+  const lite = mobile || (quality === 'full' ? false : quality === 'lite' ? true : !!constrained);
+  document.documentElement.classList.toggle('lyn-lite', lite);
+  document.documentElement.classList.toggle('lyn-mobile', mobile);
+  const maxCanvasPixels = mobile ? 365000 : lite ? 1250000 : 2100000;
+  function canvasDpr(w,h,maxDpr=1.6) {
+    return Math.max(mobile ? .48 : .55, Math.min(devicePixelRatio || 1,
+      mobile ? .84 : lite ? 1.15 : maxDpr,
+      Math.sqrt(maxCanvasPixels / Math.max(1, w*h))));
+  }
+  return { lite, mobile, canvasDpr, ambientFps: mobile ? 60 : lite ? 24 : 60,
+    roverFps:mobile ? 45 : lite ? 30 : 60,
+    orbitFps:mobile ? 45 : lite ? 24 : 60,
+    leafFps:mobile ? 60 : lite ? 24 : 60 };
+
+})();

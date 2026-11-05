@@ -2357,23 +2357,24 @@ const SPRITES = [taoSprite(1.02, 140), taoSprite(.96, 136), taoSprite(1.08, 145)
         }
         agreeButton?.addEventListener('click', batDauLoiHua);
 
-        // Outro: ảnh hồi tưởng bên trái và credit bên phải cùng hiện rồi mờ dần.
+        // Outro: ảnh hồi tưởng bên trái hiện rồi mờ dần, credit bên phải cuộn dọc từ dưới lên.
         const outroScene = document.getElementById('lyn-outro');
         const outroWindow = document.getElementById('outro-photo-window');
         const outroCount = document.getElementById('outro-count');
-        const creditCards = [...document.querySelectorAll('#outro-credits .credit-card')];
+        const creditBox = document.getElementById('outro-credits');
+        const creditRoll = document.getElementById('credit-roll');
         const PHOTO_MS = 3600;
-        let creditIndex = -1;
-        let creditTimer = 0;
 
-        function hienCredit(k) {
-            if (k === creditIndex) return;
-            const cu = creditCards[creditIndex];
-            cu?.classList.remove('hien-thi');
-            creditIndex = k;
-            clearTimeout(creditTimer);
-            // Thẻ cũ mờ hẳn rồi thẻ mới mới hiện, không chồng chữ.
-            creditTimer = setTimeout(() => creditCards[k].classList.add('hien-thi'), cu ? 950 : 0);
+        // Cuộn credit suốt thời gian chạy ảnh, dừng khi lời chúc cuối nằm giữa khung.
+        function chayCredit(thoiGian) {
+            const H = creditBox.clientHeight;
+            const end = creditRoll.querySelector('.credit-final');
+            end.style.marginTop = (H * .62).toFixed(0) + 'px';
+            const dung = H / 2 - (end.offsetTop + end.offsetHeight / 2);
+            creditRoll.animate(
+                [{transform: `translate3d(0,${H}px,0)`}, {transform: `translate3d(0,${dung.toFixed(1)}px,0)`}],
+                {duration: thoiGian, easing: 'cubic-bezier(.3,0,.45,1)', fill: 'forwards'}
+            ).onfinish = () => outroScene.classList.add('ket-thuc');
         }
 
         function batDauOutro() {
@@ -2394,23 +2395,20 @@ const SPRITES = [taoSprite(1.02, 140), taoSprite(.96, 136), taoSprite(1.08, 145)
             });
             outroScene.setAttribute('aria-hidden', 'false');
             requestAnimationFrame(() => outroScene.classList.add('hien-thi'));
-            const theCuoi = creditCards.length - 1;
             let i = -1;
             const tiep = () => {
                 // Ảnh cuối giữ lại cùng lời chúc kết.
                 if (i >= 0 && i < anh.length - 1) anh[i].classList.remove('hien-thi');
                 i++;
-                if (i >= anh.length) {
-                    hienCredit(theCuoi);
-                    outroScene.classList.add('ket-thuc');
-                    return;
-                }
+                if (i >= anh.length) return;
                 anh[i].classList.add('hien-thi');
                 outroCount.textContent = String(i + 1).padStart(2, '0') + ' / ' + anh.length;
-                hienCredit(Math.floor(i * theCuoi / anh.length));
                 setTimeout(tiep, PHOTO_MS);
             };
-            setTimeout(tiep, 1400);
+            setTimeout(() => {
+                tiep();
+                chayCredit(anh.length * PHOTO_MS);
+            }, 1400);
         }
 
         // Cả PC và điện thoại: click/chạm vào nền để chuyển cảnh.

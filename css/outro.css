@@ -215,28 +215,32 @@ body.lyn-outro-active > :not(.lyn-outro):not(#lyn-sky):not(script) {
 }
 #lyn-outro.ket-thuc .outro-count { opacity: 0; }
 
-/* ----- Credit: từng thẻ hiện rồi mờ dần ----- */
+/* ----- Credit: cuộn dọc từ dưới lên như cuối phim ----- */
 .outro-credits {
     position: relative;
     justify-self: start;
     width: min(42vw, 580px);
-    height: min(62vh, 520px);
+    height: min(74vh, 52vw);
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(transparent 0, #000 16%, #000 84%, transparent 100%);
+            mask-image: linear-gradient(transparent 0, #000 16%, #000 84%, transparent 100%);
+}
+.credit-roll {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    transform: translate3d(0, 100vh, 0);
+    will-change: transform;
 }
 .credit-card {
-    position: absolute;
-    inset: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     text-align: center;
     color: var(--net);
-    opacity: 0;
-    transform: translateY(12px);
-    filter: blur(3px);
-    transition: opacity .9s ease, transform .9s ease, filter .9s ease;
 }
-.credit-card.hien-thi { opacity: 1; transform: none; filter: none; }
+.credit-card + .credit-card { margin-top: clamp(64px, 13vh, 130px); }
 .credit-card p, .credit-card h2 { margin: 0; }
 .credit-card, .credit-card * { text-shadow: 0 0 2px rgba(110,60,0,.8), 0 0 10px rgba(255,200,60,.45); }
 .credit-role {
@@ -296,9 +300,9 @@ body.lyn-outro-active > :not(.lyn-outro):not(#lyn-sky):not(script) {
     letter-spacing: .4em;
     color: rgba(246,238,221,.8);
     opacity: 0;
-    transition: opacity 1.6s ease 1.8s;
+    transition: opacity 1.6s ease .4s;
 }
-.credit-card.hien-thi .credit-fin { opacity: 1; }
+#lyn-outro.ket-thuc .credit-fin { opacity: 1; }
 
 /* Nét gạch trang trí: tự vẽ ra mỗi khi thẻ hiện. */
 .credit-divider {
@@ -316,8 +320,7 @@ body.lyn-outro-active > :not(.lyn-outro):not(#lyn-sky):not(script) {
     stroke-dasharray: 1 1;
     stroke-dashoffset: 1;
 }
-.credit-card.hien-thi .credit-divider path,
-.credit-card.hien-thi .credit-divider circle { animation: lynVeNet 1.3s ease-out .3s forwards; }
+.credit-divider path, .credit-divider circle { stroke-dasharray: none; stroke-dashoffset: 0; }
 
 /* Điện thoại dọc: ảnh ở trên, credit ở dưới. */
 @media (max-width: 700px) and (orientation: portrait) {

@@ -148,7 +148,7 @@
             lynSoundtrack.volume = 0;
             const fadeIn = (now) => {
                 if (lynSoundtrack.paused || !musicAllowedPastGate) return;
-                const v = Math.min(1, (now - musicResumeFadeStart) / 850);
+                const v = Math.max(0, Math.min(1, (now - musicResumeFadeStart) / 850));
                 lynSoundtrack.volume = MUSIC_VOLUME * v;
                 if (v < 1) requestAnimationFrame(fadeIn);
             };
@@ -423,10 +423,7 @@
                 }
                 else if (clickCount === 13) {
                     clickCount++;
-                    batDauOutroHoiTuong();
-                }
-                else if (outroStep === 'reel' && performance.now() - reelStartedAt > 6000) {
-                    batDauCredit();
+                    batDauOutro();
                 }
             }
         }
@@ -2315,18 +2312,10 @@ const SPRITES = [taoSprite(1.02, 140), taoSprite(.96, 136), taoSprite(1.08, 145)
         // ---- KẾT: Đồng ý -> lời hứa của LYN -> outro con đường giấc mơ -> credit ----
         const text14 = document.getElementById('text-14');
         const agreeButton = document.getElementById('lyn-agree-button');
-        const dreamReel = document.getElementById('lyn-dream-reel');
-        const dreamRoad = document.getElementById('dream-road');
-        const dreamPath = document.getElementById('dream-path');
-        const creditsScene = document.getElementById('lyn-credits');
-        const creditsRoll = document.getElementById('credits-roll');
-        const creditsFin = document.getElementById('credits-fin');
         const MEMORY_PHOTOS = Array.from({length: 16}, (_, i) =>
             `assets/images/memories/${String(i + 1).padStart(2, '0')}.${i === 1 ? 'webp' : 'jpg'}`);
         let outroStep = '';
         let memoryPreload = null;
-        let reelRaf = 0;
-        let reelStartedAt = 0;
 
         function taiTruocAnhKyNiem() {
             if (memoryPreload) return;
@@ -2368,99 +2357,60 @@ const SPRITES = [taoSprite(1.02, 140), taoSprite(.96, 136), taoSprite(1.08, 145)
         }
         agreeButton?.addEventListener('click', batDauLoiHua);
 
-        // Con đường giấc mơ: một đường cong cố định, các khung ảnh trượt dọc theo nó.
-        const dreamY = (x, W, H) => H * .5 + Math.sin(x / W * Math.PI * 2 + .6) * H * .075;
-        function veConDuong() {
-            const W = innerWidth, H = innerHeight;
-            dreamPath.setAttribute('viewBox', `0 0 ${W} ${H}`);
-            let d = '';
-            for (let x = -20; x <= W + 20; x += 16) d += (d ? ' L' : 'M') + x.toFixed(0) + ' ' + dreamY(x, W, H).toFixed(1);
-            dreamPath.querySelectorAll('path').forEach(p => p.setAttribute('d', d));
+        // Outro: ảnh hồi tưởng bên trái và credit bên phải cùng hiện rồi mờ dần.
+        const outroScene = document.getElementById('lyn-outro');
+        const outroWindow = document.getElementById('outro-photo-window');
+        const outroCount = document.getElementById('outro-count');
+        const creditCards = [...document.querySelectorAll('#outro-credits .credit-card')];
+        const PHOTO_MS = 3600;
+        let creditIndex = -1;
+        let creditTimer = 0;
+
+        function hienCredit(k) {
+            if (k === creditIndex) return;
+            const cu = creditCards[creditIndex];
+            cu?.classList.remove('hien-thi');
+            creditIndex = k;
+            clearTimeout(creditTimer);
+            // Thẻ cũ mờ hẳn rồi thẻ mới mới hiện, không chồng chữ.
+            creditTimer = setTimeout(() => creditCards[k].classList.add('hien-thi'), cu ? 950 : 0);
         }
 
-        function batDauOutroHoiTuong() {
-            outroStep = 'reel';
+        function batDauOutro() {
+            outroStep = 'outro';
             canClick = false;
             activeWish = 'outro';
             taiTruocAnhKyNiem();
             text14.classList.remove('hien-thi');
             document.body.classList.add('lyn-outro-active');
-            const frames = MEMORY_PHOTOS.map((src, i) => {
-                const frame = document.createElement('figure');
-                frame.className = 'dream-frame';
+            const anh = MEMORY_PHOTOS.map(src => {
                 const img = document.createElement('img');
                 img.src = src;
                 img.alt = '';
                 img.decoding = 'async';
                 img.draggable = false;
-                frame.appendChild(img);
-                frame.style.visibility = 'hidden';
-                dreamRoad.appendChild(frame);
-                return frame;
+                outroWindow.appendChild(img);
+                return img;
             });
-            veConDuong();
-            addEventListener('resize', veConDuong, {passive: true});
-            dreamReel.setAttribute('aria-hidden', 'false');
-            setTimeout(() => {
-                dreamReel.classList.add('hien-thi');
-                reelStartedAt = performance.now();
-                const SECONDS_PER_PHOTO = 2.5;
-                const step = now => {
-                    const W = innerWidth, H = innerHeight;
-                    const fh = Math.min(H * .44, W * .52 / .75, 430);
-                    const fw = fh * .75;
-                    const spacing = Math.max(fw * 1.12, W / 4.2);
-                    const t = (now - reelStartedAt) / 1000;
-                    const travelled = t * spacing / SECONDS_PER_PHOTO;
-                    dreamRoad.style.setProperty('--frame-h', fh.toFixed(1) + 'px');
-                    let lastX = 0;
-                    frames.forEach((frame, i) => {
-                        const x = W + fw * .6 + i * spacing - travelled;
-                        lastX = x;
-                        if (x < -fw || x > W + fw) { frame.style.visibility = 'hidden'; return; }
-                        const u = Math.max(-1, Math.min(1, (x - W / 2) / (W / 2)));
-                        const scale = 1 - Math.abs(u) * .3;
-                        const rot = -u * 7 + Math.sin(i * 1.7) * 2.2;
-                        const fade = Math.max(0, Math.min(1, (1 - Math.abs(u)) / .38));
-                        frame.style.visibility = 'visible';
-                        frame.style.opacity = fade.toFixed(3);
-                        frame.style.zIndex = String(Math.round(scale * 100));
-                        frame.style.transform = `translate3d(${(x - fw / 2).toFixed(1)}px,${(dreamY(x, W, H) - fh / 2).toFixed(1)}px,0) rotate(${rot.toFixed(2)}deg) scale(${scale.toFixed(3)})`;
-                    });
-                    if (lastX < -fw) { batDauCredit(); return; }
-                    reelRaf = requestAnimationFrame(step);
-                };
-                reelRaf = requestAnimationFrame(step);
-                canClick = true;
-            }, 1200);
-        }
-
-        function batDauCredit() {
-            if (outroStep === 'credits') return;
-            outroStep = 'credits';
-            canClick = false;
-            dreamReel.classList.remove('hien-thi');
-            setTimeout(() => {
-                cancelAnimationFrame(reelRaf);
-                removeEventListener('resize', veConDuong);
-                dreamReel.setAttribute('aria-hidden', 'true');
-            }, 1300);
-            creditsScene.setAttribute('aria-hidden', 'false');
-            setTimeout(() => {
-                creditsScene.classList.add('hien-thi');
-                // Cuộn từ dưới màn hình lên tới khi lời chúc cuối nằm giữa màn hình rồi dừng.
-                const end = creditsRoll.querySelector('.credits-end');
-                const H = innerHeight;
-                const stopAt = H / 2 - (end.offsetTop + end.offsetHeight / 2);
-                const distance = H - stopAt;
-                const roll = creditsRoll.animate(
-                    [{transform: `translate3d(0,${H}px,0)`}, {transform: `translate3d(0,${stopAt}px,0)`}],
-                    {duration: distance / 52 * 1000, easing: 'cubic-bezier(.25,.1,.35,1)', fill: 'forwards'});
-                roll.onfinish = () => {
-                    end.classList.add('hien-thi');
-                    setTimeout(() => creditsFin.classList.add('hien-thi'), 1600);
-                };
-            }, 1000);
+            outroScene.setAttribute('aria-hidden', 'false');
+            requestAnimationFrame(() => outroScene.classList.add('hien-thi'));
+            const theCuoi = creditCards.length - 1;
+            let i = -1;
+            const tiep = () => {
+                // Ảnh cuối giữ lại cùng lời chúc kết.
+                if (i >= 0 && i < anh.length - 1) anh[i].classList.remove('hien-thi');
+                i++;
+                if (i >= anh.length) {
+                    hienCredit(theCuoi);
+                    outroScene.classList.add('ket-thuc');
+                    return;
+                }
+                anh[i].classList.add('hien-thi');
+                outroCount.textContent = String(i + 1).padStart(2, '0') + ' / ' + anh.length;
+                hienCredit(Math.floor(i * theCuoi / anh.length));
+                setTimeout(tiep, PHOTO_MS);
+            };
+            setTimeout(tiep, 1400);
         }
 
         // Cả PC và điện thoại: click/chạm vào nền để chuyển cảnh.

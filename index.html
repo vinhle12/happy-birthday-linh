@@ -313,48 +313,132 @@
     </div>
 
     <!-- Nút trả lời câu hỏi cuối; hiện cùng dòng "Nhận hết lời chúc...". -->
-    <button type="button" id="lyn-agree-button" class="lyn-agree-button">Đồng ý</button>
+    <button type="button" id="lyn-agree-button" class="lyn-agree-button">
+      <svg class="agree-art" viewBox="0 0 320 132" aria-hidden="true">
+        <path class="ve" style="--d:.05s" pathLength="1" d="M60 56 L20 50 L36 70 L18 90 L60 84"/>
+        <path class="ve" style="--d:.05s" pathLength="1" d="M260 56 L300 50 L284 70 L302 90 L260 84"/>
+        <path class="ve mong" style="--d:.2s" pathLength="1" d="M60 56 L46 66 L60 84 M260 56 L274 66 L260 84"/>
+        <rect class="ve nen" style="--d:.15s" pathLength="1" x="52" y="40" width="216" height="60" rx="30"/>
+        <rect class="ve mong" style="--d:.35s" pathLength="1" x="61" y="48" width="198" height="44" rx="22"/>
+        <path class="ve mong cham" style="--d:.5s" pathLength="1" d="M84 48 H236 M84 92 H236"/>
+        <g class="agree-no">
+          <path class="ve nen" style="--d:.45s" pathLength="1" d="M160 40 C128 12 112 38 160 40 C208 38 192 12 160 40"/>
+          <path class="ve mong" style="--d:.6s" pathLength="1" d="M160 40 L147 60 M160 40 L173 60"/>
+          <circle class="ve nen" style="--d:.6s" pathLength="1" cx="160" cy="40" r="4.5"/>
+        </g>
+        <path class="ve mong" style="--d:.55s" pathLength="1" d="M58 112 Q 44 104 30 112 M44 108 Q 38 98 46 94 M40 110 Q 34 120 42 124"/>
+        <path class="ve mong" style="--d:.55s" pathLength="1" d="M262 22 Q 276 30 290 22 M276 26 Q 282 36 274 40 M280 24 Q 286 14 278 10"/>
+        <g class="agree-hoa" style="--d:.7s">
+          <circle class="ve mong" pathLength="1" cx="26" cy="112" r="3"/>
+          <circle class="ve mong" pathLength="1" cx="26" cy="104" r="4"/><circle class="ve mong" pathLength="1" cx="33.6" cy="109.5" r="4"/>
+          <circle class="ve mong" pathLength="1" cx="30.7" cy="118.5" r="4"/><circle class="ve mong" pathLength="1" cx="21.3" cy="118.5" r="4"/>
+          <circle class="ve mong" pathLength="1" cx="18.4" cy="109.5" r="4"/>
+          <circle class="ve mong" pathLength="1" cx="294" cy="22" r="3"/>
+          <circle class="ve mong" pathLength="1" cx="294" cy="14" r="4"/><circle class="ve mong" pathLength="1" cx="301.6" cy="19.5" r="4"/>
+          <circle class="ve mong" pathLength="1" cx="298.7" cy="28.5" r="4"/><circle class="ve mong" pathLength="1" cx="289.3" cy="28.5" r="4"/>
+          <circle class="ve mong" pathLength="1" cx="286.4" cy="19.5" r="4"/>
+        </g>
+        <g class="agree-lap-lanh">
+          <path class="ve mong" style="--d:.8s" pathLength="1" d="M40 14 Q 40 22 48 22 Q 40 22 40 30 Q 40 22 32 22 Q 40 22 40 14"/>
+          <path class="ve mong" style="--d:.9s" pathLength="1" d="M108 8 V 20 M102 14 H 114"/>
+          <path class="ve mong" style="--d:.95s" pathLength="1" d="M222 114 V 126 M216 120 H 228"/>
+          <path class="ve mong" style="--d:.85s" pathLength="1" d="M286 98 Q 286 106 294 106 Q 286 106 286 114 Q 286 106 278 106 Q 286 106 286 98"/>
+        </g>
+      </svg>
+      <span class="agree-text">Đồng ý</span>
+    </button>
 
     <!-- Sau khi bấm "Đồng ý": lời hứa của LYN. -->
     <div id="text-14" class="text-layer">Tớ sẽ cố gắng hoàn thiện và ra khỏi Beta test,<br>khi đó chúng ta tâm sự nha !!!</div>
 
-    <!-- Outro 1: con đường giấc mơ, 16 ảnh trôi ngang theo một con đường uốn lượn như đoạn băng hồi tưởng. -->
-    <section id="lyn-dream-reel" class="lyn-outro" aria-hidden="true" aria-label="Con đường giấc mơ">
-      <div class="dream-glow" aria-hidden="true"></div>
-      <div class="dream-road" id="dream-road" aria-hidden="true">
-        <svg class="dream-path" id="dream-path" preserveAspectRatio="none">
-          <path class="dream-path-glow"/>
-          <path class="dream-path-line"/>
-        </svg>
+    <!-- Outro: bên trái ảnh hồi tưởng, bên phải credit; cả hai hiện rồi mờ dần, nét vẽ cùng kiểu bánh sinh nhật. -->
+    <section id="lyn-outro" class="lyn-outro" aria-hidden="true" aria-label="Hồi tưởng và credit">
+      <img class="outro-co-day" src="assets/images/co-day.svg" alt="" aria-hidden="true">
+      <div class="outro-stage">
+        <figure class="outro-photo" aria-hidden="true">
+          <div class="outro-photo-window" id="outro-photo-window"></div>
+          <img class="outro-frame" src="assets/images/khung-anh.svg" alt="">
+          <figcaption class="outro-count" id="outro-count"></figcaption>
+        </figure>
+        <div class="outro-credits" id="outro-credits">
+          <div class="credit-card">
+            <p class="credit-role">LYN A.I trình chiếu</p>
+            <h2 class="credit-title">Sinh nhật tuổi 19<br>của Linh</h2>
+            <svg class="credit-divider" viewBox="0 0 240 30" aria-hidden="true">
+              <path pathLength="1" d="M14 15 Q 52 7 98 15"/><path pathLength="1" d="M142 15 Q 188 7 226 15"/>
+              <path pathLength="1" d="M30 13 Q 36 4 44 9 M196 9 Q 204 4 210 13"/>
+              <path pathLength="1" d="M120 24 C 104 13 111 3 120 10 C 129 3 136 13 120 24 Z"/>
+              <circle pathLength="1" cx="8" cy="15" r="2.2"/><circle pathLength="1" cx="232" cy="15" r="2.2"/>
+            </svg>
+            <p class="credit-date">6 · 11 · 2007 &nbsp;—&nbsp; 6 · 11 · 2026</p>
+          </div>
+          <div class="credit-card">
+            <p class="credit-role">Thiết kế web</p>
+            <svg class="credit-divider" viewBox="0 0 240 30" aria-hidden="true">
+              <path pathLength="1" d="M14 15 Q 52 7 98 15"/><path pathLength="1" d="M142 15 Q 188 7 226 15"/>
+              <path pathLength="1" d="M30 13 Q 36 4 44 9 M196 9 Q 204 4 210 13"/>
+              <path pathLength="1" d="M120 24 C 104 13 111 3 120 10 C 129 3 136 13 120 24 Z"/>
+              <circle pathLength="1" cx="8" cy="15" r="2.2"/><circle pathLength="1" cx="232" cy="15" r="2.2"/>
+            </svg>
+            <p class="credit-name">Vinh Lê</p>
+          </div>
+          <div class="credit-card">
+            <p class="credit-role">Ý tưởng</p>
+            <svg class="credit-divider" viewBox="0 0 240 30" aria-hidden="true">
+              <path pathLength="1" d="M14 15 Q 52 7 98 15"/><path pathLength="1" d="M142 15 Q 188 7 226 15"/>
+              <path pathLength="1" d="M30 13 Q 36 4 44 9 M196 9 Q 204 4 210 13"/>
+              <path pathLength="1" d="M120 24 C 104 13 111 3 120 10 C 129 3 136 13 120 24 Z"/>
+              <circle pathLength="1" cx="8" cy="15" r="2.2"/><circle pathLength="1" cx="232" cy="15" r="2.2"/>
+            </svg>
+            <p class="credit-name">Vinh Lê</p>
+          </div>
+          <div class="credit-card">
+            <p class="credit-role">Platform</p>
+            <svg class="credit-divider" viewBox="0 0 240 30" aria-hidden="true">
+              <path pathLength="1" d="M14 15 Q 52 7 98 15"/><path pathLength="1" d="M142 15 Q 188 7 226 15"/>
+              <path pathLength="1" d="M30 13 Q 36 4 44 9 M196 9 Q 204 4 210 13"/>
+              <path pathLength="1" d="M120 24 C 104 13 111 3 120 10 C 129 3 136 13 120 24 Z"/>
+              <circle pathLength="1" cx="8" cy="15" r="2.2"/><circle pathLength="1" cx="232" cy="15" r="2.2"/>
+            </svg>
+            <p class="credit-name">LYN A.I</p>
+          </div>
+          <div class="credit-card">
+            <svg class="credit-divider" viewBox="0 0 240 30" aria-hidden="true">
+              <path pathLength="1" d="M14 15 Q 52 7 98 15"/><path pathLength="1" d="M142 15 Q 188 7 226 15"/>
+              <path pathLength="1" d="M30 13 Q 36 4 44 9 M196 9 Q 204 4 210 13"/>
+              <path pathLength="1" d="M120 24 C 104 13 111 3 120 10 C 129 3 136 13 120 24 Z"/>
+              <circle pathLength="1" cx="8" cy="15" r="2.2"/><circle pathLength="1" cx="232" cy="15" r="2.2"/>
+            </svg>
+            <p class="credit-story">Phần lớn ý tưởng và thiết kế của trang web này là của <strong>Vinh Lê</strong>.</p>
+          </div>
+          <div class="credit-card">
+            <svg class="credit-divider" viewBox="0 0 240 30" aria-hidden="true">
+              <path pathLength="1" d="M14 15 Q 52 7 98 15"/><path pathLength="1" d="M142 15 Q 188 7 226 15"/>
+              <path pathLength="1" d="M30 13 Q 36 4 44 9 M196 9 Q 204 4 210 13"/>
+              <path pathLength="1" d="M120 24 C 104 13 111 3 120 10 C 129 3 136 13 120 24 Z"/>
+              <circle pathLength="1" cx="8" cy="15" r="2.2"/><circle pathLength="1" cx="232" cy="15" r="2.2"/>
+            </svg>
+            <p class="credit-story">Khi biết Vinh muốn chúc mừng sinh nhật Linh, <strong>LYN A.I</strong> đã tự dựa vào thiết kế và ý tưởng đó, rồi nhảy sang trang web mới này.</p>
+          </div>
+          <div class="credit-card">
+            <dl class="credit-list">
+              <div><dt>Nhân vật chính</dt><dd>Linh</dd></div>
+              <div><dt>Người ra lệnh</dt><dd>Boss Vinh</dd></div>
+              <div><dt>Lời thoại &amp; dẫn chuyện</dt><dd>LYN A.I (bản Beta test)</dd></div>
+            </dl>
+          </div>
+          <div class="credit-card credit-final">
+            <p class="credit-end">Chúc mừng sinh nhật,<br>Linh <span>♡</span></p>
+            <svg class="credit-divider" viewBox="0 0 240 30" aria-hidden="true">
+              <path pathLength="1" d="M14 15 Q 52 7 98 15"/><path pathLength="1" d="M142 15 Q 188 7 226 15"/>
+              <path pathLength="1" d="M30 13 Q 36 4 44 9 M196 9 Q 204 4 210 13"/>
+              <path pathLength="1" d="M120 24 C 104 13 111 3 120 10 C 129 3 136 13 120 24 Z"/>
+              <circle pathLength="1" cx="8" cy="15" r="2.2"/><circle pathLength="1" cx="232" cy="15" r="2.2"/>
+            </svg>
+            <p class="credit-fin">— Hết —</p>
+          </div>
+        </div>
       </div>
-      <p class="dream-caption">những khoảnh khắc của cậu <span>✧</span></p>
-    </section>
-
-    <!-- Outro 2: credit cuộn lên như cuối phim. -->
-    <section id="lyn-credits" class="lyn-outro" aria-hidden="true" aria-label="Credit">
-      <div class="credits-roll" id="credits-roll">
-        <p class="credits-presents">LYN A.I trình chiếu</p>
-        <h2 class="credits-title">Sinh nhật tuổi 19<br>của Linh</h2>
-        <p class="credits-date">6 · 11 · 2007 &nbsp;—&nbsp; 6 · 11 · 2026</p>
-
-        <dl class="credits-block">
-          <div><dt>Thiết kế web</dt><dd>Vinh Lê</dd></div>
-          <div><dt>Ý tưởng</dt><dd>Vinh Lê</dd></div>
-          <div><dt>Platform</dt><dd>LYN A.I</dd></div>
-        </dl>
-
-        <p class="credits-story">Phần lớn ý tưởng và thiết kế của trang web này là của <strong>Vinh Lê</strong>.</p>
-        <p class="credits-story">Khi biết Vinh muốn chúc mừng sinh nhật Linh, <strong>LYN A.I</strong> đã tự dựa vào thiết kế và ý tưởng đó, rồi nhảy sang trang web mới này.</p>
-
-        <dl class="credits-block credits-block-small">
-          <div><dt>Nhân vật chính</dt><dd>Linh</dd></div>
-          <div><dt>Người ra lệnh</dt><dd>Boss Vinh</dd></div>
-          <div><dt>Lời thoại &amp; dẫn chuyện</dt><dd>LYN A.I (bản Beta test)</dd></div>
-        </dl>
-
-        <p class="credits-end">Chúc mừng sinh nhật, Linh <span>♡</span></p>
-      </div>
-      <p class="credits-fin" id="credits-fin">— Hết —</p>
     </section>
 
     <script src="js/main.js"></script>
